@@ -55,17 +55,22 @@
     background: #fff;
     color: #000;
     padding: 12px 24px;
+    border: none;
     border-radius: 12px;
-    border: 2px solid #2d322f;
     font-weight: 600;
     text-transform: uppercase;
     transition: transform 0.2s ease;
-    font-family: var(--font-heading-family);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
   .collection-button:hover {
-    transform: translateY(-2px);
+    background-color: #D4AF37;
+    color: #fff;
+    border: none; /* <-- esta línea elimina el borde feo */
+    transform: translateY(-2px); /* también puedes dejar este para que suba un poco */
   }
+
+
 
   h3.collection-title {
     margin-top: 0.5rem;
@@ -93,10 +98,17 @@
 
   .badge_nuevo {
     background-color: #D4AF37;
+    color: black;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding: 7px;
+    font-size: 1rem;
   }
 
   .badge_oferta {
     background-color: red;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding: 7px;
+    font-size: 1rem;
   }
 
   .product-price {
