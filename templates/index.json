@@ -257,7 +257,7 @@
       "settings": {
         "title": "Lo Que Dicen Nuestros Clientes",
         "heading_size": "h1",
-        "image_width": "third",
+        "image_width": "half",
         "image_ratio": "circle",
         "button_label": "",
         "button_link": "",
