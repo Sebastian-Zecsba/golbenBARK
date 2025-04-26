@@ -1,0 +1,37 @@
+<div class="product-card bg-white p-4 shadow">
+  <a href="{{ product.url }}" class="block">
+    <div class="relative">
+      {% if product.tags contains 'Nuevo' %}
+        <span class="absolute top-2 left-2 bg-yellow-400 text-black text-xs px-2 py-1 uppercase">Nuevo</span>
+      {% endif %}
+      {% if product.compare_at_price_max > product.price %}
+        {% assign discount = product.compare_at_price_max | minus: product.price | times: 100 | divided_by: product.compare_at_price_max | round %}
+        <span class="absolute top-2 right-2 bg-black text-white text-xs px-2 py-1">-{{ discount }}%</span>
+      {% endif %}
+      <img src="{{ product.featured_image | img_url: '540x540' }}" alt="{{ product.title }}" class="w-full h-auto object-cover">
+    </div>
+    <h3 class="text-lg font-medium mt-4">{{ product.title }}</h3>
+    <div class="flex items-center justify-center mt-2">
+      {% assign rating = product.metafields.custom.rating | default: 0 %}
+      {% assign count  = product.metafields.custom.review_count | default: 0 %}
+      {% for i in (1..5) %}
+        {% if rating >= i %}
+          <svg class="w-4 h-4 fill-current text-yellow-500" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.564-.955L10 0l2.946 5.955 6.564.955-4.755 4.635 1.123 6.545z"/></svg>
+        {% elsif rating > i-1 %}
+          <svg class="w-4 h-4 fill-current text-yellow-500" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.564-.955L10 0v15z"/></svg>
+        {% else %}
+          <svg class="w-4 h-4 fill-current text-gray-300" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.564-.955L10 0l2.946 5.955 6.564.955-4.755 4.635 1.123 6.545z"/></svg>
+        {% endif %}
+      {% endfor %}
+      <span class="ml-2 text-sm text-gray-600">({{ count }})</span>
+    </div>
+    <div class="mt-2">
+      {% if product.compare_at_price_max > product.price %}
+        <span class="text-sm line-through text-gray-500">{{ product.compare_at_price_max | money }}</span>
+        <span class="text-lg font-bold ml-1">{{ product.price | money }}</span>
+      {% else %}
+        <span class="text-lg font-bold">{{ product.price | money }}</span>
+      {% endif %}
+    </div>
+  </a>
+</div>
