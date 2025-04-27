@@ -217,16 +217,18 @@
   min-height: 400px;
 }
 
+/* IMPORTANTE: asegurarnos que la imagen quede detrás */
 .jewelry-category__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
 
-/* BASE OVERLAY - Siempre visible */
+/* OVERLAY ahora con z-index superior */
 .jewelry-category__overlay {
   position: absolute;
   top: 0;
@@ -236,10 +238,10 @@
   background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7));
   z-index: 1;
   transition: all 0.3s ease;
-  pointer-events: none; /* Permite que los clics pasen a través */
+  pointer-events: none;
 }
 
-/* EFECTO CORTINA DORADA */
+/* Cortina dorada sobre el overlay */
 .jewelry-category__gold-curtain {
   position: absolute;
   top: 0;
@@ -247,18 +249,16 @@
   width: 100%;
   height: 100%;
   background-color: {{ section.settings.gold_curtain_color }};
-  opacity: 0; /* Inicialmente invisible */
-  z-index: 2; /* Por encima del overlay pero debajo del contenido */
+  opacity: 0;
+  z-index: 2;
   transition: opacity 0.4s ease;
-  pointer-events: none; /* Permite que los clics pasen a través */
+  pointer-events: none;
 }
 
-/* ACTIVACIÓN DEL EFECTO CORTINA EN HOVER */
 .jewelry-category:hover .jewelry-category__gold-curtain {
   opacity: {{ section.settings.gold_curtain_opacity | divided_by: 100.0 }};
 }
 
-/* Efecto de sombra interna adicional en hover */
 .jewelry-category:hover .jewelry-category__overlay {
   background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8));
   box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
@@ -272,11 +272,10 @@
   padding: 20px;
   text-align: {{ section.settings.text_alignment }};
   color: #ffffff;
-  z-index: 3; /* Mayor z-index para que aparezca por encima de todo */
+  z-index: 3;
   transition: transform 0.3s ease;
 }
 
-/* Efecto de movimiento del contenido al hacer hover */
 .jewelry-category:hover .jewelry-category__content {
   transform: translateY(-10px);
 }
@@ -287,7 +286,7 @@
   margin-bottom: 10px;
   transition: transform 0.3s ease;
   color: {{ section.settings.title_color }};
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Mejor legibilidad sobre la cortina dorada */
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .jewelry-category__description {
@@ -300,7 +299,7 @@
   line-height: 1.5;
   margin-bottom: 20px;
   transition: max-height 0.4s ease, opacity 0.4s ease;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* Mejor legibilidad sobre la cortina dorada */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .jewelry-category:hover .jewelry-category__description {
@@ -342,7 +341,7 @@
   justify-content: center;
   align-items: center;
   transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 3; /* Mismo z-index que el contenido */
+  z-index: 3;
 }
 
 .jewelry-category:hover .jewelry-category__icon {
@@ -355,7 +354,6 @@
   height: 24px;
 }
 
-/* Responsive adjustments */
 @media screen and (max-width: 768px) {
   .jewelry-categories__container {
     flex-direction: column;
@@ -385,7 +383,6 @@
     opacity: 0.7;
   }
   
-  /* Mostrar la cortina dorada parcialmente en móvil para mejor experiencia */
   .jewelry-category__gold-curtain {
     opacity: 0.15;
   }
@@ -395,44 +392,34 @@
 <div class="jewelry-categories">
   <div class="jewelry-categories__container">
     {% for block in section.blocks %}
-      {% if block.type == 'category' %}
-        {% assign collection = block.settings.collection %}
-        {% if collection != blank %}
-          <div class="jewelry-category" {{ block.shopify_attributes }}>
-            <div class="jewelry-category__image-container">
-              {% if collection.image %}
-                {{ collection.image | image_url: width: 800 | image_tag: class: 'jewelry-category__image', loading: 'lazy', alt: collection.title }}
-              {% elsif collection.products.first.featured_image %}
-                {{ collection.products.first.featured_image | image_url: width: 800 | image_tag: class: 'jewelry-category__image', loading: 'lazy', alt: collection.title }}
-              {% else %}
-                {{ 'collection-' | append: forloop.index | placeholder_svg_tag: 'jewelry-category__image placeholder' }}
-              {% endif %}
-              
-              <!-- Base overlay siempre visible -->
-              <div class="jewelry-category__overlay"></div>
-              
-              <!-- Cortina dorada que aparece en hover -->
-              <div class="jewelry-category__gold-curtain"></div>
-            </div>
-            
-            <!-- Estrella en todas las colecciones -->
-            <div class="jewelry-category__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
-              </svg>
-            </div>
-            
-            <div class="jewelry-category__content">
-              <h3 class="jewelry-category__title" {% if block.settings.title_color != blank %}style="color: {{ block.settings.title_color }};"{% endif %}>
-                {{ block.settings.category_title | default: collection.title }}
-              </h3>
-              <p class="jewelry-category__description">{{ block.settings.category_description }}</p>
-              <a href="{{ collection.url }}" class="jewelry-category__button">
-                {{ block.settings.button_text }}
-              </a>
-            </div>
+      {% if block.type == 'category' and block.settings.collection != blank %}
+        <div class="jewelry-category" {{ block.shopify_attributes }}>
+          <div class="jewelry-category__image-container">
+            {% if block.settings.collection.image %}
+              {{ block.settings.collection.image | image_url: width: 800 | image_tag: class: 'jewelry-category__image', loading: 'lazy', alt: block.settings.collection.title }}
+            {% elsif block.settings.collection.products.first.featured_image %}
+              {{ block.settings.collection.products.first.featured_image | image_url: width: 800 | image_tag: class: 'jewelry-category__image', loading: 'lazy', alt: block.settings.collection.title }}
+            {% else %}
+              {{ 'collection-' | append: forloop.index | placeholder_svg_tag: 'jewelry-category__image placeholder' }}
+            {% endif %}
+            <div class="jewelry-category__overlay"></div>
+            <div class="jewelry-category__gold-curtain"></div>
           </div>
-        {% endif %}
+          <div class="jewelry-category__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+            </svg>
+          </div>
+          <div class="jewelry-category__content">
+            <h3 class="jewelry-category__title" {% if block.settings.title_color != blank %}style="color: {{ block.settings.title_color }};"{% endif %}>
+              {{ block.settings.category_title | default: block.settings.collection.title }}
+            </h3>
+            <p class="jewelry-category__description">{{ block.settings.category_description }}</p>
+            <a href="{{ block.settings.collection.url }}" class="jewelry-category__button">
+              {{ block.settings.button_text }}
+            </a>
+          </div>
+        </div>
       {% endif %}
     {% endfor %}
   </div>
