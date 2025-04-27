@@ -166,6 +166,8 @@
   max-width: 400px;
   cursor: pointer;
   transition: transform 0.3s ease;
+  display: block; /* Asegura que el elemento sea visible */
+  background-color: #333; /* Color de respaldo en caso de que la imagen no cargue */
 }
 
 .jewelry-category:hover {
@@ -177,6 +179,7 @@
   width: 100%;
   height: 100%;
   min-height: 400px;
+  display: block; /* Asegura que el contenedor sea visible */
 }
 
 /* IMAGEN DE FONDO */
@@ -188,31 +191,41 @@
   height: 100%;
   object-fit: cover;
   z-index: 0;
+  display: block; /* Asegura que la imagen sea visible */
 }
 
-/* NUEVO PSEUDO ELEMENTO PARA REEMPLAZAR LOS OVERLAYS */
-.jewelry-category__image-container::after {
+/* OVERLAY BASE OSCURO */
+.jewelry-category__image-container::before {
   content: "";
-  font-size: 16px;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', sans-serif;
-  color: #ffffff;
-  background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  display: grid;
-  place-items: center;
-  transform: translateY(100%);
-  transition: 0.4s;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+  z-index: 1;
+  display: block; /* Asegura que el overlay base sea visible */
+}
+
+/* EFECTO DORADO HOVER */
+.jewelry-category__image-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #d4af37; /* Color dorado */
   opacity: 0;
   z-index: 2;
+  transform: translateY(100%);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  display: block; /* Asegura que el efecto hover sea visible cuando corresponda */
 }
 
 .jewelry-category:hover .jewelry-category__image-container::after {
   transform: translateY(0);
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 /* CONTENIDO */
@@ -226,6 +239,7 @@
   color: #ffffff;
   z-index: 3;
   transition: transform 0.3s ease;
+  display: block; /* Asegura que el contenido sea visible */
 }
 
 .jewelry-category:hover .jewelry-category__content {
@@ -239,6 +253,7 @@
   transition: transform 0.3s ease;
   color: {{ section.settings.title_color }};
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  display: block; /* Asegura que el título sea visible */
 }
 
 .jewelry-category__description {
@@ -310,35 +325,98 @@
   .jewelry-categories__container {
     flex-direction: column;
     align-items: center;
+    display: flex !important; /* Forzar display flex */
+    width: 100%;
   }
   
   .jewelry-category {
     max-width: 100%;
     min-height: 350px;
+    display: block !important; /* Forzar display block */
+    width: 100%;
+    margin-bottom: 20px;
   }
   
   .jewelry-category__image-container {
     min-height: 350px;
+    display: block !important; /* Forzar display block */
+    position: relative !important;
   }
   
-  .jewelry-category__description {
-    max-height: none;
-    opacity: 1;
+  .jewelry-category__image {
+    display: block !important; /* Forzar display block */
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
   }
   
-  .jewelry-category__button {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  .jewelry-category__icon {
-    opacity: 0.7;
-  }
-  
-  /* Ajuste para móviles del nuevo pseudo-elemento */
+  /* Forzar visibilidad de overlays */
+  .jewelry-category__image-container::before,
   .jewelry-category__image-container::after {
-    opacity: 0.5;
-    transform: translateY(0);
+    display: block !important;
+    position: absolute !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  .jewelry-category__image-container::before {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8)) !important;
+    opacity: 1 !important;
+    z-index: 1 !important;
+  }
+  
+  .jewelry-category__image-container::after {
+    transform: translateY(0) !important;
+    opacity: 0.15 !important;
+    background-color: #d4af37 !important;
+    z-index: 2 !important;
+  }
+  
+  /* Forzar visibilidad del contenido */
+  .jewelry-category__content {
+    display: block !important;
+    position: absolute !important;
+    bottom: 30px !important;
+    z-index: 10 !important; /* Aumentar z-index */
+    width: 100% !important;
+    padding: 20px !important;
+  }
+  
+  .jewelry-category__title {
+    display: block !important;
+    font-size: 24px !important;
+    margin-bottom: 10px !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
+  }
+  
+  /* Siempre mostrar descripción en móviles */
+  .jewelry-category__description {
+    max-height: 300px !important;
+    opacity: 1 !important;
+    display: block !important;
+    overflow: visible !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5) !important;
+  }
+  
+  /* Siempre mostrar botón en móviles */
+  .jewelry-category__button {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    display: inline-block !important;
+    margin-top: 10px !important;
+    padding: 10px 20px !important;
+    background-color: rgba(212, 175, 55, 0.2) !important; /* Fondo ligeramente visible */
+    border: 1px solid #d4af37 !important;
+    color: #ffffff !important;
+  }
+  
+  /* Ocultar el ícono de estrella en móviles */
+  .jewelry-category__icon {
+    display: none !important;
   }
 }
 </style>
@@ -347,7 +425,8 @@
   <div class="jewelry-categories__container">
     {% for block in section.blocks %}
       {% if block.type == 'category' and block.settings.collection != blank %}
-        <div class="jewelry-category" {{ block.shopify_attributes }}>
+        {% assign collection_url = block.settings.collection.url | default: '#' %}
+        <a href="{{ collection_url }}" class="jewelry-category" {{ block.shopify_attributes }}>
           <div class="jewelry-category__image-container">
             {% if block.settings.collection.image %}
               {{ block.settings.collection.image | image_url: width: 800 | image_tag: class: 'jewelry-category__image', loading: 'lazy', alt: block.settings.collection.title }}
@@ -367,11 +446,11 @@
               {{ block.settings.category_title | default: block.settings.collection.title }}
             </h3>
             <p class="jewelry-category__description">{{ block.settings.category_description }}</p>
-            <a href="{{ block.settings.collection.url }}" class="jewelry-category__button">
+            <span class="jewelry-category__button">
               {{ block.settings.button_text }}
-            </a>
+            </span>
           </div>
-        </div>
+        </a>
       {% endif %}
     {% endfor %}
   </div>
