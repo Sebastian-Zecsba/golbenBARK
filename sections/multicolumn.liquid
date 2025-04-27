@@ -70,60 +70,70 @@
       }
     ]
   }
-  {% endschema %}
-  
-  <div class="testimonials-section" style="background-color: {{ section.settings.background_color }}; color: {{ section.settings.text_color }}; padding: 60px 20px;">
-    <div class="container" style="max-width: 1200px; margin: 0 auto;">
-      <h2 class="section-title" style="text-align: center; font-size: 2.5rem; margin-bottom: 50px;">{{ section.settings.title }}</h2>
-      
-      <div class="testimonials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-        {% for block in section.blocks %}
-          {% if block.type == 'testimonial' %}
-            <div class="testimonial-card" style="background-color: #141B2D; border-radius: 8px; padding: 30px; position: relative;">
-              <div class="quote-mark" style="position: absolute; top: 20px; left: 20px; font-size: 2.5rem; color: #FFD700; font-family: serif;">"</div>
-              
-              <p class="testimonial-text" style="margin-top: 20px; font-size: 1rem; line-height: 1.6;">
-                {{ block.settings.testimonial_text }}
-              </p>
-              
-              <div class="customer-info" style="display: flex; align-items: center; margin-top: 20px;">
-                {% if block.settings.customer_image %}
-                  <div class="customer-image" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 15px;">
-                    <img 
-                      src="{{ block.settings.customer_image | image_url: width: 100 }}" 
-                      alt="{{ block.settings.customer_name }}" 
-                      style="width: 100%; height: 100%; object-fit: cover;"
-                      width="100"
-                      height="100"
-                    >
-                  </div>
-                {% else %}
-                  <div class="customer-image-placeholder" style="width: 50px; height: 50px; border-radius: 50%; background-color: #f0f0f0; margin-right: 15px;"></div>
-                {% endif %}
-                
-                <div class="customer-details">
-                  <p class="customer-name" style="margin: 0; font-weight: bold; font-size: 1.1rem;">{{ block.settings.customer_name }}</p>
-                  <p class="customer-since" style="margin: 0; font-size: 0.9rem; opacity: 0.7;">{{ block.settings.customer_since }}</p>
+{% endschema %}
+
+<div class="testimonials-section" style="background-color: {{ section.settings.background_color }}; color: {{ section.settings.text_color }}; padding: 60px 20px;">
+  <div class="container" style="max-width: 1200px; margin: 0 auto;">
+    <h2 class="section-title" style="text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: {{ section.settings.text_color }};">{{ section.settings.title }}</h2>
+    
+    <div class="testimonials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+      {% for block in section.blocks %}
+        {% if block.type == 'testimonial' %}
+          <div class="testimonial-card" style="background-color: #141B2D; border-radius: 8px; padding: 30px; position: relative; color: {{ section.settings.text_color }};">
+            <div class="quote-mark" style="position: absolute; top: 20px; left: 20px; font-size: 2.5rem; color: #FFD700; font-family: serif;">"</div>
+            
+            <p class="testimonial-text" style="margin-top: 20px; font-size: 1rem; line-height: 1.6; color: {{ section.settings.text_color }};">
+              {{ block.settings.testimonial_text }}
+            </p>
+            
+            <div class="customer-info" style="display: flex; align-items: center; margin-top: 20px;">
+              {% if block.settings.customer_image %}
+                <div class="customer-image" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 15px;">
+                  <img 
+                    src="{{ block.settings.customer_image | image_url: width: 100 }}" 
+                    alt="{{ block.settings.customer_name }}" 
+                    style="width: 100%; height: 100%; object-fit: cover;"
+                    width="100"
+                    height="100"
+                  >
                 </div>
+              {% else %}
+                <div class="customer-image-placeholder" style="width: 50px; height: 50px; border-radius: 50%; background-color: #f0f0f0; margin-right: 15px;"></div>
+              {% endif %}
+              
+              <div class="customer-details">
+                <p class="customer-name" style="margin: 0; font-weight: bold; font-size: 1.1rem; color: {{ section.settings.text_color }};">{{ block.settings.customer_name }}</p>
+                <p class="customer-since" style="margin: 0; font-size: 0.9rem; opacity: 0.7; color: {{ section.settings.text_color }};">{{ block.settings.customer_since }}</p>
               </div>
             </div>
-          {% endif %}
-        {% endfor %}
-      </div>
+          </div>
+        {% endif %}
+      {% endfor %}
     </div>
   </div>
-  
-  {% style %}
-  .testimonials-section {
-    font-family: Arial, sans-serif;
-  }
-  .testimonial-card {
-    transition: transform 0.3s ease;
-  }
-  .testimonial-card:hover {
-    transform: translateY(-5px);
-  }
-  .quote-mark {
-    font-weight: bold;
-  }
-  {% endstyle %}
+</div>
+
+{% style %}
+.testimonials-section {
+  font-family: Arial, sans-serif;
+}
+.testimonial-card {
+  transition: transform 0.3s ease;
+  color: {{ section.settings.text_color }};
+}
+.testimonial-text {
+  color: {{ section.settings.text_color }} !important;
+}
+.customer-name, .customer-since {
+  color: {{ section.settings.text_color }} !important;
+}
+.section-title {
+  color: {{ section.settings.text_color }} !important;
+}
+.testimonial-card:hover {
+  transform: translateY(-5px);
+}
+.quote-mark {
+  font-weight: bold;
+}
+{% endstyle %}
