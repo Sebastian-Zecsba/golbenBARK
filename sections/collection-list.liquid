@@ -57,42 +57,10 @@
         "default": "center"
       },
       {
-        "type": "header",
-        "content": "Button Settings"
-      },
-      {
-        "type": "color",
-        "id": "button_text_color",
-        "label": "Button Text Color",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "id": "button_border_color",
-        "label": "Button Border Color",
-        "default": "#d4af37"
-      },
-      {
         "type": "color",
         "id": "title_color",
         "label": "Title Color",
         "default": "#ffffff"
-      },
-      {
-        "type": "color",
-        "id": "gold_curtain_color",
-        "label": "Golden Curtain Color",
-        "default": "#d4af37"
-      },
-      {
-        "type": "range",
-        "id": "gold_curtain_opacity",
-        "min": 0,
-        "max": 100,
-        "step": 5,
-        "unit": "%",
-        "label": "Golden Curtain Opacity",
-        "default": 30
       },
       {
         "type": "color",
@@ -135,12 +103,6 @@
             "id": "title_color",
             "label": "Custom Title Color",
             "info": "Override the default title color for this category"
-          },
-          {
-            "type": "color",
-            "id": "overlay_color",
-            "label": "Overlay Color",
-            "default": "#000000"
           }
         ]
       }
@@ -217,7 +179,7 @@
   min-height: 400px;
 }
 
-/* IMPORTANTE: asegurarnos que la imagen quede detrás */
+/* IMAGEN DE FONDO */
 .jewelry-category__image {
   position: absolute;
   top: 0;
@@ -228,7 +190,7 @@
   z-index: 0;
 }
 
-/* OVERLAY ahora con z-index superior */
+/* OVERLAY PRINCIPAL */
 .jewelry-category__overlay {
   position: absolute;
   top: 0;
@@ -241,22 +203,23 @@
   pointer-events: none;
 }
 
-/* Cortina dorada sobre el overlay */
+/* OVERLAY DORADO */
 .jewelry-category__gold-curtain {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: {{ section.settings.gold_curtain_color }};
+  background-color: #d4af37; /* Color dorado fijo */
   opacity: 0;
   z-index: 2;
   transition: opacity 0.4s ease;
   pointer-events: none;
 }
 
+/* EFECTOS EN HOVER */
 .jewelry-category:hover .jewelry-category__gold-curtain {
-  opacity: {{ section.settings.gold_curtain_opacity | divided_by: 100.0 }};
+  opacity: 0.3; /* Opacidad fija al 30% */
 }
 
 .jewelry-category:hover .jewelry-category__overlay {
@@ -264,6 +227,7 @@
   box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
 }
 
+/* CONTENIDO */
 .jewelry-category__content {
   position: absolute;
   bottom: 30px;
@@ -311,8 +275,8 @@
   display: inline-block;
   padding: 12px 24px;
   background: transparent;
-  color: {{ section.settings.button_text_color }};
-  border: 1px solid {{ section.settings.button_border_color }};
+  color: #000000; /* Color fijo */
+  border: 1px solid #d4af37; /* Color dorado fijo */
   text-decoration: none;
   text-transform: uppercase;
   font-size: 12px;
