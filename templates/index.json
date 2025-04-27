@@ -54,6 +54,26 @@
     "collection_list_9RFYgW": {
       "type": "collection-list",
       "blocks": {
+        "category_WDjkpw": {
+          "type": "category",
+          "settings": {
+            "category_title": "Category Title",
+            "category_description": "Beautiful pieces that add sophistication to any outfit.",
+            "button_text": "EXPLORAR COLECCIÓN",
+            "button_link": "",
+            "overlay_color": "#000000"
+          }
+        },
+        "category_xVQjTP": {
+          "type": "category",
+          "settings": {
+            "category_title": "Category Title",
+            "category_description": "Beautiful pieces that add sophistication to any outfit.",
+            "button_text": "EXPLORAR COLECCIÓN",
+            "button_link": "",
+            "overlay_color": "#000000"
+          }
+        },
         "category_Vtfq88": {
           "type": "category",
           "settings": {
@@ -62,19 +82,21 @@
             "category_description": "Hermosas piezas de oro lamiando",
             "button_text": "EXPLORAR COLECCIÓN",
             "button_link": "",
-            "overlay_color": "#d4af37"
+            "overlay_color": "#fcfcfc"
           }
         }
       },
       "block_order": [
+        "category_WDjkpw",
+        "category_xVQjTP",
         "category_Vtfq88"
       ],
       "settings": {
-        "background_color": "#f5f5f5",
-        "section_padding": 60,
+        "background_color": "#ffffff",
+        "section_padding": 65,
         "card_border_radius": 0,
         "text_alignment": "center",
-        "button_text_color": "#000000",
+        "button_text_color": "#ffffff",
         "button_border_color": "#d4af37"
       }
     },
