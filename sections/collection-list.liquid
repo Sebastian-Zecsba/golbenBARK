@@ -241,9 +241,10 @@
     background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7));
     opacity: 1;
     transition: all 0.3s ease;
+    z-index: 1;
   }
   
-  /* Golden curtain effect */
+  /* SOLUCIÓN GOLD CURTAIN - VERSIÓN MEJORADA */
   .jewelry-category__gold-curtain {
     position: absolute;
     top: 0;
@@ -252,8 +253,9 @@
     height: 100%;
     background-color: {{ section.settings.gold_curtain_color }};
     opacity: 0;
-    z-index: 1;
-    transition: opacity 0.3s ease;
+    z-index: 2; /* Por encima del overlay base pero debajo del contenido */
+    transition: opacity 0.4s ease;
+    pointer-events: none; /* Permite que los clics pasen a través */
   }
   
   .jewelry-category:hover .jewelry-category__gold-curtain {
@@ -273,7 +275,7 @@
     padding: 20px;
     text-align: {{ section.settings.text_alignment }};
     color: #ffffff;
-    z-index: 2;
+    z-index: 3; /* Mayor z-index para que aparezca por encima de todo */
   }
   
   .jewelry-category__title {
@@ -282,6 +284,7 @@
     margin-bottom: 10px;
     transition: transform 0.3s ease;
     color: {{ section.settings.title_color }};
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Mejor legibilidad sobre la cortina dorada */
   }
   
   .jewelry-category__description {
@@ -294,6 +297,7 @@
     line-height: 1.5;
     margin-bottom: 20px;
     transition: max-height 0.3s ease, opacity 0.3s ease;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* Mejor legibilidad sobre la cortina dorada */
   }
   
   .jewelry-category:hover .jewelry-category__description {
@@ -335,6 +339,7 @@
     justify-content: center;
     align-items: center;
     transition: opacity 0.3s ease;
+    z-index: 3; /* Mismo z-index que el contenido */
   }
   
   .jewelry-category:hover .jewelry-category__icon {
@@ -375,6 +380,11 @@
     .jewelry-category__icon {
       opacity: 0.7;
     }
+    
+    /* Mostrar la cortina dorada parcialmente en móvil para mejor experiencia */
+    .jewelry-category__gold-curtain {
+      opacity: 0.15;
+    }
   }
   </style>
   
@@ -394,6 +404,7 @@
                   {{ 'collection-' | append: forloop.index | placeholder_svg_tag: 'jewelry-category__image placeholder' }}
                 {% endif %}
                 <div class="jewelry-category__overlay" style="background-color: {{ block.settings.overlay_color }}80;"></div>
+                <!-- Cortina dorada mejorada -->
                 <div class="jewelry-category__gold-curtain"></div>
               </div>
               
