@@ -53,58 +53,13 @@
     },
     "multicolumn_zpn7WE": {
       "type": "multicolumn",
-      "blocks": {
-        "column_ddywxz": {
-          "type": "column",
-          "settings": {
-            "title": "Diseño Exclusivo",
-            "text": "<p>Piezas únicas creadas por maestros artesanos con décadas de experiencia.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_xMRBne": {
-          "type": "column",
-          "settings": {
-            "title": "Materiales Premium",
-            "text": "<p>Utilizamos solo los metales y piedras preciosas de la más alta calidad.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_G7fC8A": {
-          "type": "column",
-          "settings": {
-            "title": "Garantía de 7 Años",
-            "text": "<p>Respaldamos cada pieza con nuestro compromiso de excelencia y durabilidad.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_ddywxz",
-        "column_xMRBne",
-        "column_G7fC8A"
-      ],
       "custom_css": [
         "li {border-style: 2px; border-color: red;}"
       ],
       "settings": {
         "title": "",
-        "heading_size": "h1",
-        "image_width": "full",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 3,
-        "column_alignment": "left",
-        "background_style": "primary",
-        "color_scheme": "scheme-4",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "background_color": "#000000",
+        "text_color": "#FFFFFF"
       }
     },
     "collection_list_9RFYgW": {
@@ -218,57 +173,23 @@
     "multicolumn_KY8i7Y": {
       "type": "multicolumn",
       "blocks": {
-        "column_AHVDCN": {
-          "type": "column",
+        "testimonial_dgkVUM": {
+          "type": "testimonial",
           "settings": {
-            "image": "shopify://shop_images/loguito_828874e8-e856-4a74-95a6-f614a0f6e581.png",
-            "title": "",
-            "text": "<p>La colección es simplemente impresionante. Cada pieza es única y la atención al detalle es evidente en cada diseño.<br/><br/></p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_NTnhGg": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/FOTO_PERRO_SUCIO.png",
-            "title": "",
-            "text": "<p>Las joyas de esta tienda han sido mi elección para momentos especiales durante años. La calidad es incomparable y siempre recibo cumplidos.<br/><br/></p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_zwDKeK": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/PNGCeci.png",
-            "title": "Columna",
-            "text": "<p>Vincula un texto con una imagen para atraer la atención hacia tu producto, colección o artículo de blog seleccionados. Agrega detalles sobre disponibilidad y estilo, o incluso ofrece una reseña.</p>",
-            "link_label": "",
-            "link": ""
+            "customer_image": "shopify://shop_images/FOTO_PERRO_SUCIO.png",
+            "customer_name": "Peter Panl",
+            "customer_since": "Cliente desde 2025",
+            "testimonial_text": "Esta gente es lo maximo viejo!"
           }
         }
       },
       "block_order": [
-        "column_AHVDCN",
-        "column_NTnhGg",
-        "column_zwDKeK"
+        "testimonial_dgkVUM"
       ],
       "settings": {
         "title": "Lo Que Dicen Nuestros Clientes",
-        "heading_size": "h1",
-        "image_width": "half",
-        "image_ratio": "circle",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 3,
-        "column_alignment": "center",
-        "background_style": "primary",
-        "color_scheme": "scheme-4",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "background_color": "#000000",
+        "text_color": "#FFFFFF"
       }
     }
   },
