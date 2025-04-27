@@ -51,48 +51,31 @@
         "padding_bottom": 52
       }
     },
-    "multicolumn_zpn7WE": {
-      "type": "multicolumn",
-      "custom_css": [
-        "li {border-style: 2px; border-color: red;}"
-      ],
-      "settings": {
-        "title": "",
-        "background_color": "#000000",
-        "text_color": "#FFFFFF"
-      }
-    },
     "collection_list_9RFYgW": {
       "type": "collection-list",
       "blocks": {
-        "featured_collection_kinQ6h": {
-          "type": "featured_collection",
+        "category_Vtfq88": {
+          "type": "category",
           "settings": {
-            "collection": "collares"
-          }
-        },
-        "featured_collection_88ct3n": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "pulseras"
+            "category_image": "shopify://shop_images/eslabonc1.webp",
+            "category_title": "CADENAS",
+            "category_description": "Hermosas piezas de oro lamiando",
+            "button_text": "EXPLORAR COLECCIÓN",
+            "button_link": "",
+            "overlay_color": "#d4af37"
           }
         }
       },
       "block_order": [
-        "featured_collection_kinQ6h",
-        "featured_collection_88ct3n"
+        "category_Vtfq88"
       ],
       "settings": {
-        "title": "Nuestras Categorías",
-        "heading_size": "h1",
-        "image_ratio": "square",
-        "columns_desktop": 3,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 24,
-        "padding_bottom": 36
+        "background_color": "#f5f5f5",
+        "section_padding": 60,
+        "card_border_radius": 0,
+        "text_alignment": "center",
+        "button_text_color": "#000000",
+        "button_border_color": "#d4af37"
       }
     },
     "minimal_product_grid_1": {
@@ -179,7 +162,8 @@
             "customer_image": "shopify://shop_images/FOTO_PERRO_SUCIO.png",
             "customer_name": "Peter Panl",
             "customer_since": "Cliente desde 2025",
-            "testimonial_text": "Esta gente es lo maximo viejo!"
+            "testimonial_text": "Esta gente es lo maximo viejo!",
+            "text_size": "medium"
           }
         },
         "testimonial_WR98Jn": {
@@ -188,7 +172,8 @@
             "customer_image": "shopify://shop_images/Natural-Cadena-Lazo-Mano.jpg",
             "customer_name": "Nombre del Cliente",
             "customer_since": "Cliente desde 20XX",
-            "testimonial_text": "Texto del testimonio del cliente aquí."
+            "testimonial_text": "Texto del testimonio del cliente aquí.",
+            "text_size": "medium"
           }
         },
         "testimonial_YaernW": {
@@ -197,7 +182,8 @@
             "customer_image": "shopify://shop_images/eslabonc1.webp",
             "customer_name": "Nombre del Cliente",
             "customer_since": "Cliente desde 20XX",
-            "testimonial_text": "Texto del testimonio del cliente aquí."
+            "testimonial_text": "Texto del testimonio del cliente aquí.",
+            "text_size": "medium"
           }
         }
       },
@@ -209,13 +195,12 @@
       "settings": {
         "title": "Lo Que Dicen Nuestros Clientes",
         "background_color": "#000000",
-        "text_color": "#FFFFFF"
+        "text_color": "#ffffff"
       }
     }
   },
   "order": [
     "rich_text_ML7ebw",
-    "multicolumn_zpn7WE",
     "collection_list_9RFYgW",
     "minimal_product_grid_1",
     "image_with_text_y7JabR",
