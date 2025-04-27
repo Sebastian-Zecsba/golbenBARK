@@ -80,12 +80,6 @@
       },
       {
         "type": "color",
-        "id": "inner_shadow_color",
-        "label": "Inner Shadow Color on Hover",
-        "default": "rgba(0,0,0,0.3)"
-      },
-      {
-        "type": "color",
         "id": "gold_curtain_color",
         "label": "Golden Curtain Color",
         "default": "#d4af37"
@@ -242,6 +236,7 @@
   background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7));
   z-index: 1;
   transition: all 0.3s ease;
+  pointer-events: none; /* Permite que los clics pasen a través */
 }
 
 /* EFECTO CORTINA DORADA */
@@ -251,7 +246,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #d4af37; /* Color dorado fijo */
+  background-color: {{ section.settings.gold_curtain_color }};
   opacity: 0; /* Inicialmente invisible */
   z-index: 2; /* Por encima del overlay pero debajo del contenido */
   transition: opacity 0.4s ease;
@@ -260,11 +255,12 @@
 
 /* ACTIVACIÓN DEL EFECTO CORTINA EN HOVER */
 .jewelry-category:hover .jewelry-category__gold-curtain {
-  opacity: 0.3; /* Valor fijo de opacidad al 30% */
+  opacity: {{ section.settings.gold_curtain_opacity | divided_by: 100.0 }};
 }
 
 /* Efecto de sombra interna adicional en hover */
 .jewelry-category:hover .jewelry-category__overlay {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8));
   box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
 }
 
