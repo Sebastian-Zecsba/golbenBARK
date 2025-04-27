@@ -48,6 +48,26 @@
             "id": "testimonial_text",
             "label": "Testimonial Text",
             "default": "Texto del testimonio del cliente aquí."
+          },
+          {
+            "type": "select",
+            "id": "text_size",
+            "label": "Testimonial Text Size",
+            "options": [
+              {
+                "value": "small",
+                "label": "Small"
+              },
+              {
+                "value": "medium",
+                "label": "Medium"
+              },
+              {
+                "value": "large",
+                "label": "Large"
+              }
+            ],
+            "default": "medium"
           }
         ]
       }
@@ -72,38 +92,37 @@
   }
 {% endschema %}
 
-<div class="testimonials-section" style="background-color: {{ section.settings.background_color }}; color: {{ section.settings.text_color }}; padding: 60px 20px;">
-  <div class="container" style="max-width: 1200px; margin: 0 auto;">
-    <h2 class="section-title" style="text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: {{ section.settings.text_color }};">{{ section.settings.title }}</h2>
+<div class="testimonials-section">
+  <div class="container">
+    <h2 class="section-title">{{ section.settings.title }}</h2>
     
-    <div class="testimonials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+    <div class="testimonials-grid">
       {% for block in section.blocks %}
         {% if block.type == 'testimonial' %}
-          <div class="testimonial-card" style="background-color: #141B2D; border-radius: 8px; padding: 30px; position: relative; color: {{ section.settings.text_color }};">
-            <div class="quote-mark" style="position: absolute; top: 20px; left: 20px; font-size: 2.5rem; color: #FFD700; font-family: serif;">"</div>
+          <div class="testimonial-card" {{ block.shopify_attributes }}>
+            <div class="quote-mark">"</div>
             
-            <p class="testimonial-text" style="margin-top: 20px; font-size: 1rem; line-height: 1.6; color: {{ section.settings.text_color }};">
+            <p class="testimonial-text testimonial-text-{{ block.settings.text_size }}">
               {{ block.settings.testimonial_text }}
             </p>
             
-            <div class="customer-info" style="display: flex; align-items: center; margin-top: 20px;">
+            <div class="customer-info">
               {% if block.settings.customer_image %}
-                <div class="customer-image" style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-right: 15px;">
+                <div class="customer-image">
                   <img 
                     src="{{ block.settings.customer_image | image_url: width: 100 }}" 
-                    alt="{{ block.settings.customer_name }}" 
-                    style="width: 100%; height: 100%; object-fit: cover;"
+                    alt="{{ block.settings.customer_name }}"
                     width="100"
                     height="100"
                   >
                 </div>
               {% else %}
-                <div class="customer-image-placeholder" style="width: 50px; height: 50px; border-radius: 50%; background-color: #f0f0f0; margin-right: 15px;"></div>
+                <div class="customer-image-placeholder"></div>
               {% endif %}
               
               <div class="customer-details">
-                <p class="customer-name" style="margin: 0; font-weight: bold; font-size: 1.1rem; color: {{ section.settings.text_color }};">{{ block.settings.customer_name }}</p>
-                <p class="customer-since" style="margin: 0; font-size: 0.9rem; opacity: 0.7; color: {{ section.settings.text_color }};">{{ block.settings.customer_since }}</p>
+                <p class="customer-name">{{ block.settings.customer_name }}</p>
+                <p class="customer-since">{{ block.settings.customer_since }}</p>
               </div>
             </div>
           </div>
@@ -115,25 +134,114 @@
 
 {% style %}
 .testimonials-section {
+  background-color: {{ section.settings.background_color }};
+  color: {{ section.settings.text_color }};
+  padding: 60px 20px;
   font-family: Arial, sans-serif;
 }
-.testimonial-card {
-  transition: transform 0.3s ease;
-  color: {{ section.settings.text_color }};
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
-.testimonial-text {
-  color: {{ section.settings.text_color }} !important;
-}
-.customer-name, .customer-since {
-  color: {{ section.settings.text_color }} !important;
-}
+
 .section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 50px;
   color: {{ section.settings.text_color }} !important;
 }
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.testimonial-card {
+  background-color: #141B2D;
+  border-radius: 8px;
+  padding: 30px;
+  position: relative;
+  color: {{ section.settings.text_color }};
+  transition: transform 0.3s ease;
+}
+
 .testimonial-card:hover {
   transform: translateY(-5px);
 }
+
 .quote-mark {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 2.5rem;
+  color: #FFD700;
+  font-family: serif;
   font-weight: bold;
+}
+
+.testimonial-text {
+  margin-top: 20px;
+  line-height: 1.6;
+  color: {{ section.settings.text_color }} !important;
+}
+
+/* Tamaños de texto configurables */
+.testimonial-text-small {
+  font-size: 0.9rem;
+}
+
+.testimonial-text-medium {
+  font-size: 1rem;
+}
+
+.testimonial-text-large {
+  font-size: 1.2rem;
+}
+
+.customer-info {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.customer-image, .customer-image-placeholder {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.customer-image {
+  overflow: hidden;
+}
+
+.customer-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.customer-image-placeholder {
+  background-color: #f0f0f0;
+}
+
+.customer-details {
+  color: {{ section.settings.text_color }};
+}
+
+.customer-name {
+  margin: 0;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: {{ section.settings.text_color }} !important;
+}
+
+.customer-since {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  color: {{ section.settings.text_color }} !important;
 }
 {% endstyle %}
