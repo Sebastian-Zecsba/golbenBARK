@@ -1,0 +1,189 @@
+{% schema %}
+    {
+      "name": "Características Premium",
+      "settings": [
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Color de fondo",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "accent_color",
+          "label": "Color de acento",
+          "default": "#c9a54a"
+        }
+      ],
+      "blocks": [
+        {
+          "type": "feature",
+          "name": "Característica",
+          "limit": 3,
+          "settings": [
+            {
+              "type": "text",
+              "id": "icon",
+              "label": "Icono (◊, ♔, ♦)",
+              "default": "◊"
+            },
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Título",
+              "default": "Diseño Exclusivo"
+            },
+            {
+              "type": "textarea",
+              "id": "description",
+              "label": "Descripción",
+              "default": "Piezas únicas creadas por maestros artesanos con décadas de experiencia."
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Características Premium",
+          "blocks": [
+            {
+              "type": "feature",
+              "settings": {
+                "icon": "◊",
+                "title": "Diseño Exclusivo",
+                "description": "Piezas únicas creadas por maestros artesanos con décadas de experiencia."
+              }
+            },
+            {
+              "type": "feature",
+              "settings": {
+                "icon": "♔",
+                "title": "Materiales Premium",
+                "description": "Utilizamos solo los metales y piedras preciosas de la más alta calidad."
+              }
+            },
+            {
+              "type": "feature",
+              "settings": {
+                "icon": "♦",
+                "title": "Garantía de por Vida",
+                "description": "Respaldamos cada pieza con nuestro compromiso de excelencia y durabilidad."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    {% endschema %}
+    
+    <style>
+    .premium-features {
+      padding: 60px 20px;
+      background-color: {{ section.settings.background_color }};
+      color: #fff;
+    }
+    
+    .premium-features__container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    
+    .premium-feature {
+      border: 1px solid rgba({{ section.settings.accent_color | color_to_rgb }}, 0.3);
+      padding: 30px 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .premium-feature:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      border-color: {{ section.settings.accent_color }};
+    }
+    
+    .premium-feature:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      background: rgba({{ section.settings.accent_color | color_to_rgb }}, 0.05);
+      transition: height 0.3s ease;
+      z-index: 0;
+    }
+    
+    .premium-feature:hover:before {
+      height: 100%;
+    }
+    
+    .premium-feature__icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: rgba({{ section.settings.accent_color | color_to_rgb }}, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: {{ section.settings.accent_color }};
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    
+    .premium-feature:hover .premium-feature__icon {
+      background-color: rgba({{ section.settings.accent_color | color_to_rgb }}, 0.2);
+      transform: scale(1.1);
+    }
+    
+    .premium-feature__title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: {{ section.settings.accent_color }};
+      position: relative;
+      z-index: 1;
+    }
+    
+    .premium-feature__description {
+      font-size: 16px;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+    
+    @media screen and (max-width: 767px) {
+      .premium-features__container {
+        grid-template-columns: 1fr;
+      }
+      
+      .premium-feature {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    }
+    </style>
+    
+    <div class="premium-features">
+      <div class="premium-features__container">
+        {% for block in section.blocks %}
+          {% if block.type == 'feature' %}
+            <div class="premium-feature" {{ block.shopify_attributes }}>
+              <div class="premium-feature__icon">{{ block.settings.icon }}</div>
+              <h3 class="premium-feature__title">{{ block.settings.title }}</h3>
+              <p class="premium-feature__description">{{ block.settings.description }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>

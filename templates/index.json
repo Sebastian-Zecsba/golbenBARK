@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "rich_text_ML7ebw": {
@@ -49,6 +40,44 @@
         "full_width": true,
         "padding_top": 40,
         "padding_bottom": 52
+      }
+    },
+    "premium_features": {
+      "type": "main-cards",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "icon": "◊",
+            "title": "Diseño Exclusivo",
+            "description": "Piezas únicas creadas por maestros artesanos con décadas de experiencia."
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "icon": "♔",
+            "title": "Materiales Premium",
+            "description": "Utilizamos solo los metales y piedras preciosas de la más alta calidad."
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "icon": "♦",
+            "title": "Garantía de por Vida",
+            "description": "Respaldamos cada pieza con nuestro compromiso de excelencia y durabilidad."
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3"
+      ],
+      "settings": {
+        "background_color": "#000000",
+        "accent_color": "#c9a54a"
       }
     },
     "collection_list_9RFYgW": {
@@ -205,6 +234,7 @@
   },
   "order": [
     "rich_text_ML7ebw",
+    "premium_features",
     "collection_list_9RFYgW",
     "minimal_product_grid_1",
     "image_with_text_y7JabR",
