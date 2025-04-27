@@ -54,41 +54,19 @@
     "collection_list_9RFYgW": {
       "type": "collection-list",
       "blocks": {
-        "category_WDjkpw": {
-          "type": "category",
-          "settings": {
-            "category_title": "Category Title",
-            "category_description": "Beautiful pieces that add sophistication to any outfit.",
-            "button_text": "EXPLORAR COLECCIÓN",
-            "button_link": "",
-            "overlay_color": "#000000"
-          }
-        },
-        "category_xVQjTP": {
-          "type": "category",
-          "settings": {
-            "category_title": "Category Title",
-            "category_description": "Beautiful pieces that add sophistication to any outfit.",
-            "button_text": "EXPLORAR COLECCIÓN",
-            "button_link": "",
-            "overlay_color": "#000000"
-          }
-        },
         "category_Vtfq88": {
           "type": "category",
           "settings": {
-            "category_image": "shopify://shop_images/eslabonc1.webp",
+            "collection": "collares",
             "category_title": "CADENAS",
             "category_description": "Hermosas piezas de oro lamiando",
             "button_text": "EXPLORAR COLECCIÓN",
-            "button_link": "",
-            "overlay_color": "#fcfcfc"
+            "title_color": "#fffdfd",
+            "overlay_color": "#ff0000"
           }
         }
       },
       "block_order": [
-        "category_WDjkpw",
-        "category_xVQjTP",
         "category_Vtfq88"
       ],
       "settings": {
@@ -97,7 +75,11 @@
         "card_border_radius": 0,
         "text_alignment": "center",
         "button_text_color": "#ffffff",
-        "button_border_color": "#d4af37"
+        "button_border_color": "#d4af37",
+        "title_color": "#ffffff",
+        "gold_curtain_color": "#d4af37",
+        "gold_curtain_opacity": 30,
+        "star_background_color": "#d4af37"
       }
     },
     "minimal_product_grid_1": {
