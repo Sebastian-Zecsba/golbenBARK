@@ -181,10 +181,30 @@
             "customer_since": "Cliente desde 2025",
             "testimonial_text": "Esta gente es lo maximo viejo!"
           }
+        },
+        "testimonial_WR98Jn": {
+          "type": "testimonial",
+          "settings": {
+            "customer_image": "shopify://shop_images/Natural-Cadena-Lazo-Mano.jpg",
+            "customer_name": "Nombre del Cliente",
+            "customer_since": "Cliente desde 20XX",
+            "testimonial_text": "Texto del testimonio del cliente aquí."
+          }
+        },
+        "testimonial_YaernW": {
+          "type": "testimonial",
+          "settings": {
+            "customer_image": "shopify://shop_images/eslabonc1.webp",
+            "customer_name": "Nombre del Cliente",
+            "customer_since": "Cliente desde 20XX",
+            "testimonial_text": "Texto del testimonio del cliente aquí."
+          }
         }
       },
       "block_order": [
-        "testimonial_dgkVUM"
+        "testimonial_dgkVUM",
+        "testimonial_WR98Jn",
+        "testimonial_YaernW"
       ],
       "settings": {
         "title": "Lo Que Dicen Nuestros Clientes",
