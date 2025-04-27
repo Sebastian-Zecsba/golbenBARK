@@ -1,361 +1,363 @@
-{{ 'section-collection-list.css' | asset_url | stylesheet_tag }}
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'component-slider.css' | asset_url | stylesheet_tag }}
-
-{%- style -%}
-
-  .collection-list {
-    justify-content: center;
+{% schema %}
+  {
+    "name": "Jewelry Categories",
+    "settings": [
+      {
+        "type": "header",
+        "content": "General Settings"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#f5f5f5"
+      },
+      {
+        "type": "range",
+        "id": "section_padding",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "px",
+        "label": "Section Padding",
+        "default": 60
+      },
+      {
+        "type": "header",
+        "content": "Card Settings"
+      },
+      {
+        "type": "range",
+        "id": "card_border_radius",
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Card Border Radius",
+        "default": 0
+      },
+      {
+        "type": "select",
+        "id": "text_alignment",
+        "label": "Text Alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "center"
+      },
+      {
+        "type": "header",
+        "content": "Button Settings"
+      },
+      {
+        "type": "color",
+        "id": "button_text_color",
+        "label": "Button Text Color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "button_border_color",
+        "label": "Button Border Color",
+        "default": "#d4af37"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "category",
+        "name": "Jewelry Category",
+        "limit": 6,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "category_image",
+            "label": "Category Image"
+          },
+          {
+            "type": "text",
+            "id": "category_title",
+            "label": "Category Title",
+            "default": "Category Title"
+          },
+          {
+            "type": "text",
+            "id": "category_description",
+            "label": "Category Description",
+            "default": "Beautiful pieces that add sophistication to any outfit."
+          },
+          {
+            "type": "text",
+            "id": "button_text",
+            "label": "Button Text",
+            "default": "EXPLORAR COLECCIÓN"
+          },
+          {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button Link"
+          },
+          {
+            "type": "color",
+            "id": "overlay_color",
+            "label": "Overlay Color",
+            "default": "#000000"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Jewelry Categories",
+        "blocks": [
+          {
+            "type": "category",
+            "settings": {
+              "category_title": "Anillos",
+              "category_description": "Elegantes diseños que resaltan tu estilo personal y complementan cualquier look.",
+              "button_text": "EXPLORAR COLECCIÓN"
+            }
+          },
+          {
+            "type": "category",
+            "settings": {
+              "category_title": "Collares",
+              "category_description": "Piezas deslumbrantes que enmarcan tu rostro y añaden un toque de sofisticación a cualquier atuendo.",
+              "button_text": "EXPLORAR COLECCIÓN"
+            }
+          },
+          {
+            "type": "category",
+            "settings": {
+              "category_title": "Pulseras",
+              "category_description": "Accesorios versátiles que realzan tu elegancia y complementan tu personalidad.",
+              "button_text": "EXPLORAR COLECCIÓN"
+            }
+          }
+        ]
+      }
+    ]
   }
-
-  .collection-list {
+  {% endschema %}
+  
+  <style>
+  .jewelry-categories {
+    padding: {{ section.settings.section_padding }}px 0;
+    background-color: {{ section.settings.background_color }};
+  }
+  
+  .jewelry-categories__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 2rem;
+    gap: 20px;
   }
   
-  h2 {
-    text-align: center;
-    font-family: var(--font-heading-family);
-    font-size: calc(var(--font-heading-scale) * 3.4rem) !important;  
-    font-weight: var(--font-heading-weight);
-    margin: 0 0 2rem;
+  .jewelry-category {
+    position: relative;
+    border-radius: {{ section.settings.card_border_radius }}px;
+    overflow: hidden;
+    flex: 1 1 300px;
+    min-height: 400px;
+    max-width: 400px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
   }
   
+  .jewelry-category:hover {
+    transform: translateY(-5px);
+  }
   
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
-
-  .section-{{ section.id }}-padding .title-wrapper-with-link {
-    justify-content: center !important;
-  }
-
-  .section-{{ section.id }}-padding .collection-list-title {
-    text-align: center !important;
+  .jewelry-category__image-container {
+    position: relative;
     width: 100%;
+    height: 100%;
+    min-height: 400px;
   }
   
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
+  .jewelry-category__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
-
-  @media screen and (max-width: 640px) {
-  /* Reduce el padding lateral del contenedor */
-  .collection-list-wrapper {
-    padding-left: 0.8rem !important;
-    padding-right: 0.8rem !important;
-    max-width: 90% !important;
+  
+  .jewelry-category__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7));
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .jewelry-category:hover .jewelry-category__overlay {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
+  }
+  
+  .jewelry-category__content {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    text-align: {{ section.settings.text_alignment }};
+    color: #ffffff;
+    z-index: 2;
+  }
+  
+  .jewelry-category__title {
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .jewelry-category__description {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
     margin: 0 auto;
+    max-width: 80%;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
   }
-
-  /* Menos separación entre tarjetas */
-  .collection-list {
-    gap: 4rem !important;
-  }
-
-  /* Asegura que cada tarjeta ocupe todo el ancho disponible */
-  .collection-list__item {
-    flex: 1 1 100% !important;
-    max-width: 100% !important;
-  }
-}
-
   
-{%- endstyle -%}
-
-{%- liquid
-  assign columns_mobile_int = section.settings.columns_mobile | plus: 0
-  assign show_mobile_slider = false
-  if section.settings.swipe_on_mobile and section.blocks.size > columns_mobile_int
-    assign show_mobile_slider = true
-  endif
--%}
-
-<div class="color-{{ section.settings.color_scheme }} gradient">
-  <div class="collection-list-wrapper page-width isolate{% if show_mobile_slider %} page-width-desktop{% endif %}{% if section.settings.title == blank %} no-heading{% endif %}{% if section.settings.show_view_all == false or section.blocks.size > collections.size %} no-mobile-link{% endif %} section-{{ section.id }}-padding">
-    {%- unless section.settings.title == blank -%}
-      <div class="title-wrapper-with-link{% if show_mobile_slider %} title-wrapper--self-padded-tablet-down{% else %} title-wrapper--self-padded-mobile{% endif %} title-wrapper--no-top-margin">
-        <h2
-          id="SectionHeading-{{ section.id }}"
-          class="collection-list-title inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-        >
-          {{ section.settings.title }}
-        </h2>
-
-        {%- if section.settings.show_view_all and show_mobile_slider -%}
-          <a
-            href="{{ routes.collections_url }}"
-            id="ViewAll-{{ section.id }}"
-            class="link underlined-link large-up-hide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-            aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
-          >
-            {{- 'sections.collection_list.view_all' | t -}}
-          </a>
-        {%- endif -%}
-      </div>
-    {%- endunless -%}
-
-    <slider-component class="slider-mobile-gutter{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <ul
-        class="collection-list contains-card contains-card--collection{% if settings.card_style == 'standard' %} contains-card--standard{% endif %} grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down{% if section.settings.swipe_on_mobile %} slider slider--tablet grid--peek{% endif %} collection-list--{{ section.blocks.size }}-items"
-        id="Slider-{{ section.id }}"
-        role="list"
-      >
-        {%- liquid
-          assign columns = section.blocks.size
-          if columns > 3
-            assign columns = 3
-          endif
-        -%}
-        {%- for block in section.blocks -%}
-          <li
-            id="Slide-{{ section.id }}-{{ forloop.index }}"
-            class="collection-list__item grid__item{% if show_mobile_slider %} slider__slide{% endif %}{% if block.settings.collection.featured_image == nil %} collection-list__item--no-media{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-            {{ block.shopify_attributes }}
-            {% if settings.animations_reveal_on_scroll %}
-              data-cascade
-              style="--animation-order: {{ forloop.index }};"
+  .jewelry-category:hover .jewelry-category__description {
+    max-height: 300px;
+    opacity: 1;
+  }
+  
+  .jewelry-category__button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: transparent;
+    color: {{ section.settings.button_text_color }};
+    border: 1px solid {{ section.settings.button_border_color }};
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .jewelry-category:hover .jewelry-category__button {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .jewelry-category__icon {
+    display: none;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    background-color: #d4af37;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .jewelry-category:hover .jewelry-category__icon {
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .jewelry-category__icon svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* Responsive adjustments */
+  @media screen and (max-width: 768px) {
+    .jewelry-categories__container {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .jewelry-category {
+      max-width: 100%;
+      min-height: 350px;
+    }
+    
+    .jewelry-category__image-container {
+      min-height: 350px;
+    }
+    
+    .jewelry-category__description {
+      max-height: none;
+      opacity: 1;
+    }
+    
+    .jewelry-category__button {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  </style>
+  
+  <div class="jewelry-categories">
+    <div class="jewelry-categories__container">
+      {% for block in section.blocks %}
+        {% if block.type == 'category' %}
+          <div class="jewelry-category" {{ block.shopify_attributes }}>
+            <div class="jewelry-category__image-container">
+              {% if block.settings.category_image %}
+                {{ block.settings.category_image | image_url: width: 800 | image_tag: class: 'jewelry-category__image', loading: 'lazy', alt: block.settings.category_title }}
+              {% else %}
+                {{ 'lifestyle-2' | placeholder_svg_tag: 'jewelry-category__image placeholder' }}
+              {% endif %}
+              <div class="jewelry-category__overlay" style="background-color: {{ block.settings.overlay_color }}80;"></div>
+            </div>
+            
+            {% if forloop.index == 2 %}
+              <div class="jewelry-category__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+                </svg>
+              </div>
             {% endif %}
-          >
-            {%- assign placeholder_image_index = forloop.index0 | modulo: 4 | plus: 1 -%}
-            {%- assign placeholder_image = 'collection-apparel-' | append: placeholder_image_index -%}
-            {% render 'card_collection',
-              card_collection: block.settings.collection,
-              media_aspect_ratio: section.settings.image_ratio,
-              columns: columns,
-              placeholder_image: placeholder_image
-            %}
-          </li>
-        {%- endfor -%}
-      </ul>
-      {%- if show_mobile_slider -%}
-        <div class="slider-buttons">
-          <button
-            type="button"
-            class="slider-button slider-button--prev"
-            name="previous"
-            aria-label="{{ 'general.slider.previous_slide' | t }}"
-          >
-            <span class="svg-wrapper">
-              {{- 'icon-caret.svg' | inline_asset_content -}}
-            </span>
-          </button>
-          <div class="slider-counter caption">
-            <span class="slider-counter--current">1</span>
-            <span aria-hidden="true"> / </span>
-            <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
-            <span class="slider-counter--total">{{ section.blocks.size }}</span>
+            
+            <div class="jewelry-category__content">
+              <h3 class="jewelry-category__title">{{ block.settings.category_title }}</h3>
+              <p class="jewelry-category__description">{{ block.settings.category_description }}</p>
+              {% if block.settings.button_link %}
+                <a href="{{ block.settings.button_link }}" class="jewelry-category__button">
+                  {{ block.settings.button_text }}
+                </a>
+              {% else %}
+                <a href="#" class="jewelry-category__button">
+                  {{ block.settings.button_text }}
+                </a>
+              {% endif %}
+            </div>
           </div>
-          <button
-            type="button"
-            class="slider-button slider-button--next"
-            name="next"
-            aria-label="{{ 'general.slider.next_slide' | t }}"
-          >
-            <span class="svg-wrapper">
-              {{- 'icon-caret.svg' | inline_asset_content -}}
-            </span>
-          </button>
-        </div>
-      {%- endif -%}
-    </slider-component>
-
-    {%- if section.settings.show_view_all and section.blocks.size < collections.size -%}
-      <div
-        class="center collection-list-view-all{% if show_mobile_slider %} small-hide medium-hide{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-        {% if settings.animations_reveal_on_scroll %}
-          data-cascade
         {% endif %}
-      >
-        <a
-          href="{{ routes.collections_url }}"
-          class="button"
-          id="ViewAllButton-{{ section.id }}"
-          aria-labelledby="ViewAllButton-{{ section.id }} SectionHeading-{{ section.id }}"
-        >
-          {{- 'sections.collection_list.view_all' | t -}}
-        </a>
-      </div>
-    {%- endif -%}
+      {% endfor %}
+    </div>
   </div>
-</div>
-
-{% schema %}
-{
-  "name": "t:sections.collection-list.name",
-  "tag": "section",
-  "class": "section section-collection-list",
-  "max_blocks": 15,
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  },
-  "settings": [
-    {
-      "type": "inline_richtext",
-      "id": "title",
-      "default": "t:sections.collection-list.settings.title.default",
-      "label": "t:sections.collection-list.settings.title.label"
-    },
-    {
-      "type": "select",
-      "id": "heading_size",
-      "options": [
-        {
-          "value": "h2",
-          "label": "t:sections.all.heading_size.options__1.label"
-        },
-        {
-          "value": "h1",
-          "label": "t:sections.all.heading_size.options__2.label"
-        },
-        {
-          "value": "h0",
-          "label": "t:sections.all.heading_size.options__3.label"
-        },
-        {
-          "value": "hxl",
-          "label": "t:sections.all.heading_size.options__4.label"
-        },
-        {
-          "value": "hxxl",
-          "label": "t:sections.all.heading_size.options__5.label"
-        }
-      ],
-      "default": "h1",
-      "label": "t:sections.all.heading_size.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.collection-list.settings.header_layout.content"
-    },    
-    {
-      "type": "select",
-      "id": "image_ratio",
-      "options": [
-        {
-          "value": "adapt",
-          "label": "t:sections.collection-list.settings.image_ratio.options__1.label"
-        },
-        {
-          "value": "portrait",
-          "label": "t:sections.collection-list.settings.image_ratio.options__2.label"
-        },
-        {
-          "value": "square",
-          "label": "t:sections.collection-list.settings.image_ratio.options__3.label"
-        }
-      ],
-      "default": "square",
-      "label": "t:sections.collection-list.settings.image_ratio.label"
-    },
-    {
-      "type": "range",
-      "id": "columns_desktop",
-      "min": 1,
-      "max": 6,
-      "step": 1,
-      "default": 3,
-      "label": "t:sections.collection-list.settings.columns_desktop.label"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "info": "t:sections.all.colors.has_cards_info",
-      "default": "scheme-1"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_view_all",
-      "default": false,
-      "label": "t:sections.collection-list.settings.show_view_all.label",
-      "info": "t:sections.collection-list.settings.show_view_all.info"   
-    },
-    {
-      "type": "header",
-      "content": "t:sections.collection-list.settings.header_mobile.content"
-    },
-    {
-      "type": "select",
-      "id": "columns_mobile",
-      "options": [
-        {
-          "value": "1",
-          "label": "t:sections.collection-list.settings.columns_mobile.options__1.label"
-        },
-        {
-          "value": "2",
-          "label": "t:sections.collection-list.settings.columns_mobile.options__2.label"
-        }
-      ],
-      "default": "1",
-      "label": "t:sections.collection-list.settings.columns_mobile.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "swipe_on_mobile",
-      "default": false,
-      "label": "t:sections.collection-list.settings.swipe_on_mobile.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 36
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 36
-    }
-  ],
-  "blocks": [
-    {
-      "type": "featured_collection",
-      "name": "t:sections.collection-list.blocks.featured_collection.name",
-      "settings": [
-        {
-          "type": "collection",
-          "id": "collection",
-          "label": "t:sections.collection-list.blocks.featured_collection.settings.collection.label"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "t:sections.collection-list.presets.name",
-      "blocks": [
-        {
-          "type": "featured_collection"
-        },
-        {
-          "type": "featured_collection"
-        },
-        {
-          "type": "featured_collection"
-        }
-      ]
-    }
-  ]
-}
-{% endschema %}
