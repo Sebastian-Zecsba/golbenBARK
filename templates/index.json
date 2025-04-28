@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "rich_text_ML7ebw": {
@@ -77,7 +86,10 @@
       ],
       "settings": {
         "background_color": "#000000",
-        "accent_color": "#c9a54a"
+        "accent_color": "#c9a54a",
+        "cards_gap": 15,
+        "title_size": 24,
+        "description_size": 16
       }
     },
     "collection_list_9RFYgW": {
@@ -90,8 +102,7 @@
             "category_title": "CADENAS",
             "category_description": "Hermosas piezas de oro lamiando",
             "button_text": "EXPLORAR COLECCIÓN",
-            "title_color": "#fffdfd",
-            "overlay_color": "#ff0000"
+            "title_color": "#fffdfd"
           }
         }
       },
@@ -99,44 +110,62 @@
         "category_Vtfq88"
       ],
       "settings": {
+        "heading": "Categorías Exclusivas",
+        "subheading": "Explora nuestra selección de joyas meticulosamente elaboradas para cada ocasión y estilo personal.",
+        "heading_size": "medium",
+        "heading_color": "#000000",
+        "subheading_color": "#333333",
         "background_color": "#ffffff",
         "section_padding": 65,
         "card_border_radius": 0,
         "text_alignment": "center",
-        "button_text_color": "#ffffff",
-        "button_border_color": "#d4af37",
         "title_color": "#ffffff",
-        "gold_curtain_color": "#d4af37",
-        "gold_curtain_opacity": 30,
         "star_background_color": "#d4af37"
       }
     },
     "minimal_product_grid_1": {
       "type": "minimal-product-grid",
       "blocks": {
-        "producto_zbrb8N": {
-          "type": "producto",
+        "product_Gpeti3": {
+          "type": "product",
           "settings": {
             "product": "perro-sucio",
-            "title-collection": "Anillo Celestial"
+            "custom_title": "",
+            "show_discount": false,
+            "discount_amount": "15"
           }
         },
-        "producto_QRA9jY": {
-          "type": "producto",
+        "product_mQUbaX": {
+          "type": "product",
+          "settings": {
+            "product": "perro-sucio",
+            "custom_title": "",
+            "show_discount": false,
+            "discount_amount": "15"
+          }
+        },
+        "featured_product_TkxPXU": {
+          "type": "featured_product",
           "settings": {
             "product": "collar",
-            "title-collection": "Collar Eterno"
+            "custom_title": "",
+            "custom_description": ""
           }
         }
       },
       "block_order": [
-        "producto_zbrb8N",
-        "producto_QRA9jY"
+        "product_Gpeti3",
+        "product_mQUbaX",
+        "featured_product_TkxPXU"
       ],
       "settings": {
         "title": "Productos Destacados",
         "description": "Nuestra selección de piezas más exclusivas, creadas con los materiales más finos y diseñadas para perdurar en el tiempo.",
-        "button-text": "Comprar"
+        "button_text": "DESCUBRIR",
+        "secondary_button_text": "VER",
+        "badge_featured": "DESTACADO",
+        "badge_featured_color": "#D4AF37",
+        "overlay_color": "#000000"
       }
     },
     "image_with_text_y7JabR": {
