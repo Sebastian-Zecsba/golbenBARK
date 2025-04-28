@@ -125,29 +125,6 @@
     },
     "minimal_product_grid_1": {
       "type": "minimal-product-grid",
-      "blocks": {
-        "product_Gpeti3": {
-          "type": "product",
-          "settings": {
-            "product": "perro-sucio",
-            "custom_title": "",
-            "show_discount": false,
-            "discount_amount": "15"
-          }
-        },
-        "featured_product_TkxPXU": {
-          "type": "featured_product",
-          "settings": {
-            "product": "collar",
-            "custom_title": "",
-            "custom_description": ""
-          }
-        }
-      },
-      "block_order": [
-        "product_Gpeti3",
-        "featured_product_TkxPXU"
-      ],
       "settings": {
         "title": "Productos Destacados",
         "description": "Nuestra selección de piezas más exclusivas, creadas con los materiales más finos y diseñadas para perdurar en el tiempo.",
