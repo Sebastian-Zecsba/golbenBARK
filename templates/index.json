@@ -139,11 +139,19 @@
             "product": "collar",
             "hover_text": ""
           }
+        },
+        "product_HD7Nxq": {
+          "type": "product",
+          "settings": {
+            "product": "pulsera-oro-laminado",
+            "hover_text": ""
+          }
         }
       },
       "block_order": [
         "product_FEbCgF",
-        "product_e9ha3y"
+        "product_e9ha3y",
+        "product_HD7Nxq"
       ],
       "settings": {
         "featured_product": "perro-sucio",
