@@ -4,6 +4,54 @@
     "settings": [
       {
         "type": "header",
+        "content": "Heading Settings"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Main Heading",
+        "default": "Categorías Exclusivas"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Subheading",
+        "default": "Explora nuestra selección de joyas meticulosamente elaboradas para cada ocasión y estilo personal."
+      },
+      {
+        "type": "select",
+        "id": "heading_size",
+        "label": "Heading Size",
+        "options": [
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "medium",
+            "label": "Medium"
+          },
+          {
+            "value": "large",
+            "label": "Large"
+          }
+        ],
+        "default": "medium"
+      },
+      {
+        "type": "color",
+        "id": "heading_color",
+        "label": "Heading Color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "subheading_color",
+        "label": "Subheading Color",
+        "default": "#333333"
+      },
+      {
+        "type": "header",
         "content": "General Settings"
       },
       {
@@ -145,6 +193,50 @@
 .jewelry-categories {
   padding: {{ section.settings.section_padding }}px 0;
   background-color: {{ section.settings.background_color }};
+}
+
+.jewelry-categories__header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 0 20px;
+}
+
+.jewelry-categories__heading {
+  margin-bottom: 15px;
+  color: {{ section.settings.heading_color }};
+  font-weight: 400;
+  position: relative;
+  display: inline-block;
+}
+
+.jewelry-categories__heading.small {
+  font-size: 28px;
+}
+
+.jewelry-categories__heading.medium {
+  font-size: 36px;
+}
+
+.jewelry-categories__heading.large {
+  font-size: 44px;
+}
+
+.jewelry-categories__heading::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 2px;
+  background-color: #d4af37;
+  margin: 10px auto 0;
+}
+
+.jewelry-categories__subheading {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 16px;
+  line-height: 1.6;
+  color: {{ section.settings.subheading_color }};
+  font-weight: 300;
 }
 
 .jewelry-categories__container {
@@ -322,6 +414,26 @@
 }
 
 @media screen and (max-width: 768px) {
+  .jewelry-categories__header {
+    margin-bottom: 30px;
+  }
+  
+  .jewelry-categories__heading.small {
+    font-size: 24px;
+  }
+  
+  .jewelry-categories__heading.medium {
+    font-size: 28px;
+  }
+  
+  .jewelry-categories__heading.large {
+    font-size: 32px;
+  }
+  
+  .jewelry-categories__subheading {
+    font-size: 14px;
+  }
+  
   .jewelry-categories__container {
     flex-direction: column;
     align-items: center;
@@ -422,6 +534,11 @@
 </style>
 
 <div class="jewelry-categories">
+  <div class="jewelry-categories__header">
+    <h2 class="jewelry-categories__heading {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+    <p class="jewelry-categories__subheading">{{ section.settings.subheading }}</p>
+  </div>
+  
   <div class="jewelry-categories__container">
     {% for block in section.blocks %}
       {% if block.type == 'category' and block.settings.collection != blank %}
