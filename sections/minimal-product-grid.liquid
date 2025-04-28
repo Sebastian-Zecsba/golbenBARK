@@ -1,5 +1,5 @@
 {% comment %}
-  Sección de Producto Destacado con Grid de 4 Productos y Efecto Overlay Hover
+  Sección de Producto Destacado con Grid de 4 Productos Seleccionables
 {% endcomment %}
 
 <style>
@@ -219,6 +219,18 @@
     background-color: #B8860B;
   }
   
+  .empty-product-slot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    height: 100%;
+    color: #666;
+    text-align: center;
+    padding: 20px;
+  }
+  
   @media (max-width: 768px) {
     .featured-products-section {
       flex-direction: column;
@@ -232,11 +244,12 @@
 </style>
 
 <div class="featured-products-section">
-  {% assign featured_product = collections[section.settings.featured_collection].products[0] %}
+  {% assign featured_product = all_products[section.settings.featured_product] %}
   
+  {% if featured_product.title %}
   <div class="featured-product">
     <img 
-      src="{{ featured_product.featured_image | image_url: width: '800' }}" 
+      src="{{ featured_product.featured_image | image_url: width: 800 }}" 
       alt="{{ featured_product.title }}" 
       width="800"
       height="800"
@@ -283,12 +296,18 @@
       </div>
     </div>
   </div>
+  {% else %}
+  <div class="featured-product empty-product-slot">
+    <p>Selecciona un producto destacado en la configuración de la sección</p>
+  </div>
+  {% endif %}
   
   <div class="products-grid">
-    {% assign grid_collection = collections[section.settings.grid_collection] %}
-    {% for product in grid_collection.products limit: 4 %}
-      {% if product.id != featured_product.id or section.settings.allow_duplicates %}
-        <div class="grid-product">
+    {% for block in section.blocks %}
+      {% assign product = all_products[block.settings.product] %}
+      
+      {% if product.title %}
+        <div class="grid-product" {{ block.shopify_attributes }}>
           <img 
             src="{{ product.featured_image | image_url: width: 400 }}" 
             alt="{{ product.title }}" 
@@ -299,7 +318,7 @@
           
           {% if product.compare_at_price > product.price %}
             {% assign discount_percentage = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}
-            <span class="sale-badge">-{{ discount_percentage }}%</span>
+            <span class="sale-badge">-{{ discount_percentage | round }}%</span>
           {% endif %}
           
           <!-- Overlay base con información del producto -->
@@ -317,12 +336,22 @@
           <!-- Nuevo overlay con efecto hover -->
           <div class="product-hover-overlay">
             <div class="hover-content">
-              <h3 class="hover-title">{{ section.settings.grid_hover_text }}</h3>
+              <h3 class="hover-title">{{ block.settings.hover_text | default: section.settings.grid_hover_text }}</h3>
               <a href="{{ product.url }}" class="hover-button">{{ section.settings.hover_button_text }}</a>
             </div>
           </div>
         </div>
+      {% else %}
+        <div class="grid-product empty-product-slot" {{ block.shopify_attributes }}>
+          <p>Selecciona un producto para este espacio</p>
+        </div>
       {% endif %}
+    {% else %}
+      {% for i in (1..4) %}
+        <div class="grid-product empty-product-slot">
+          <p>Agrega productos en la configuración de la sección</p>
+        </div>
+      {% endfor %}
     {% endfor %}
   </div>
 </div>
@@ -338,14 +367,9 @@
       "default": "DESTACADO"
     },
     {
-      "type": "collection",
-      "id": "featured_collection",
-      "label": "Colección para producto destacado"
-    },
-    {
-      "type": "collection",
-      "id": "grid_collection",
-      "label": "Colección para cuadrícula de productos"
+      "type": "product",
+      "id": "featured_product",
+      "label": "Producto destacado"
     },
     {
       "type": "text",
@@ -362,7 +386,7 @@
     {
       "type": "text",
       "id": "grid_hover_text",
-      "label": "Texto del overlay al pasar el cursor (productos de cuadrícula)",
+      "label": "Texto del overlay por defecto (productos de cuadrícula)",
       "default": "Ver detalles"
     },
     {
@@ -370,18 +394,45 @@
       "id": "hover_button_text",
       "label": "Texto del botón en overlay hover",
       "default": "VER AHORA"
-    },
+    }
+  ],
+  "blocks": [
     {
-      "type": "checkbox",
-      "id": "allow_duplicates",
-      "label": "Permitir productos duplicados",
-      "default": false
+      "type": "product",
+      "name": "Producto",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Producto"
+        },
+        {
+          "type": "text",
+          "id": "hover_text",
+          "label": "Texto personalizado para el overlay (opcional)"
+        }
+      ]
     }
   ],
   "presets": [
     {
       "name": "Productos Destacados",
-      "category": "Productos"
+      "category": "Productos",
+      "blocks": [
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        }
+      ]
     }
   ]
 }
