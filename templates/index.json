@@ -126,36 +126,24 @@
     "minimal_product_grid_1": {
       "type": "minimal-product-grid",
       "blocks": {
-        "product_tYctEk": {
+        "product_e9ha3y": {
           "type": "product",
           "settings": {
-            "product": "perro-sucio",
-            "custom_title": "",
-            "show_discount": false,
-            "discount_amount": "15"
-          }
-        },
-        "featured_product_bM6KKQ": {
-          "type": "featured_product",
-          "settings": {
             "product": "collar",
-            "custom_title": "",
-            "custom_description": ""
+            "hover_text": ""
           }
         }
       },
       "block_order": [
-        "product_tYctEk",
-        "featured_product_bM6KKQ"
+        "product_e9ha3y"
       ],
       "settings": {
-        "title": "Productos Destacados",
-        "description": "Nuestra selección de piezas más exclusivas, creadas con los materiales más finos y diseñadas para perdurar en el tiempo.",
+        "featured_tag": "DESTACADO",
+        "featured_product": "perro-sucio",
         "button_text": "DESCUBRIR",
-        "secondary_button_text": "VER",
-        "badge_featured": "DESTACADO",
-        "badge_featured_color": "#d4af37",
-        "overlay_background": "rgba(0,0,0,0.4)"
+        "hover_text": "El Código Bravo",
+        "grid_hover_text": "Ver detalles",
+        "hover_button_text": "VER AHORA"
       }
     },
     "image_with_text_y7JabR": {
