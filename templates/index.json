@@ -126,6 +126,15 @@
     "minimal_product_grid_1": {
       "type": "minimal-product-grid",
       "blocks": {
+        "product_tYctEk": {
+          "type": "product",
+          "settings": {
+            "product": "perro-sucio",
+            "custom_title": "",
+            "show_discount": false,
+            "discount_amount": "15"
+          }
+        },
         "featured_product_bM6KKQ": {
           "type": "featured_product",
           "settings": {
@@ -136,6 +145,7 @@
         }
       },
       "block_order": [
+        "product_tYctEk",
         "featured_product_bM6KKQ"
       ],
       "settings": {
