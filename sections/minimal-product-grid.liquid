@@ -1,508 +1,388 @@
-{% schema %}
-  {
-    "name": "Productos Destacados",
-    "settings": [
-      {
-        "type": "text",
-        "id": "title",
-        "label": "Título de Sección",
-        "default": "Nuestras Joyas Destacadas"
-      },
-      {
-        "type": "text",
-        "id": "description",
-        "label": "Descripción",
-        "default": "Descubre nuestras piezas más exclusivas, creadas con los materiales más finos"
-      },
-      {
-        "type": "text",
-        "id": "button_text",
-        "label": "Texto del Botón Principal",
-        "default": "DESCUBRIR"
-      },
-      {
-        "type": "text",
-        "id": "secondary_button_text",
-        "label": "Texto del Botón Secundario",
-        "default": "VER"
-      },
-      {
-        "type": "text",
-        "id": "badge_featured",
-        "label": "Texto Etiqueta Destacado",
-        "default": "DESTACADO"
-      },
-      {
-        "type": "color",
-        "id": "badge_featured_color",
-        "label": "Color Etiqueta Destacado",
-        "default": "#D4AF37"
-      },
-      {
-        "type": "color",
-        "id": "overlay_background",
-        "label": "Color de Superposición",
-        "default": "rgba(0,0,0,0.4)"
-      }
-    ],
-    "blocks": [
-      {
-        "type": "featured_product",
-        "name": "Producto Principal",
-        "limit": 1,
-        "settings": [
-          {
-            "type": "product",
-            "id": "product",
-            "label": "Producto"
-          },
-          {
-            "type": "text",
-            "id": "custom_title",
-            "label": "Título Personalizado (Opcional)"
-          },
-          {
-            "type": "textarea",
-            "id": "custom_description",
-            "label": "Descripción Personalizada (Opcional)"
-          }
-        ]
-      },
-      {
-        "type": "product",
-        "name": "Producto Secundario",
-        "settings": [
-          {
-            "type": "product",
-            "id": "product",
-            "label": "Producto"
-          },
-          {
-            "type": "text",
-            "id": "custom_title",
-            "label": "Título Personalizado (Opcional)"
-          },
-          {
-            "type": "checkbox",
-            "id": "show_discount",
-            "label": "Mostrar etiqueta de descuento",
-            "default": false
-          },
-          {
-            "type": "text",
-            "id": "discount_amount",
-            "label": "Porcentaje de descuento",
-            "default": "15"
-          }
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "Productos Destacados",
-        "category": "Productos",
-        "blocks": [
-          {
-            "type": "featured_product"
-          },
-          {
-            "type": "product"
-          },
-          {
-            "type": "product"
-          },
-          {
-            "type": "product"
-          }
-        ]
-      }
-    ]
-  }
-  {% endschema %}
-  
-  <style>
-  .featured-collection {
-    padding: 60px 0;
-    font-family: var(--font-body-family);
-  }
-  
-  .featured-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-  
-  .section-header {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  
-  .section-title {
-    font-family: var(--font-heading-family);
-    font-size: calc(var(--font-heading-scale) * 2.5rem);
-    font-weight: var(--font-heading-weight);
-    margin-bottom: 15px;
-    color: #1a1a1a;
-  }
-  
-  .section-description {
-    font-size: calc(var(--font-body-scale) * 1.15rem);
-    line-height: 1.5;
-    max-width: 700px;
-    margin: 0 auto;
-  }
-  
-  .products-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+{% comment %}
+  Sección de Producto Destacado con Grid de 4 Productos y Efecto Overlay Hover
+{% endcomment %}
+
+<style>
+  .featured-products-section {
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
   }
   
   .featured-product {
+    flex: 1;
+    min-width: 300px;
     position: relative;
-    grid-column: 1;
-    grid-row: 1 / span 2;
+    border-radius: 8px;
     overflow: hidden;
-    aspect-ratio: 1/1.2;
-    background-color: #f0f0f0;
+    background: linear-gradient(to bottom, #7d7d7d 0%, #3a3a3a 100%);
   }
   
-  .secondary-products-grid {
-    grid-column: 2;
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-  
-  .secondary-product {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 1/1;
-    background-color: #f0f0f0;
-  }
-  
-  .secondary-product:first-child {
-    grid-column: 1 / span 2;
-  }
-  
-  .product-link {
-    position: relative;
-    display: block;
+  .featured-product-image {
     width: 100%;
-    height: 100%;
-    text-decoration: none;
-    color: #fff;
-  }
-  
-  .product-image-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-  
-  .product-image {
-    width: 100%;
-    height: 100%;
+    height: 500px;
     object-fit: cover;
-    transition: transform 0.7s ease;
+    transition: transform 0.3s ease;
   }
   
-  .product-link:hover .product-image {
-    transform: scale(1.05);
-  }
-  
-  .product-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%);
-    z-index: 2;
-  }
-  
-  .product-badge {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    padding: 5px 10px;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    z-index: 3;
-    color: #D4AF37;
-  }
-  
-  .discount-badge {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 5px 10px;
-    background-color: #000;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 600;
-    z-index: 3;
-  }
-  
-  .product-content {
+  .featured-product-overlay {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     padding: 30px;
-    z-index: 3;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+    color: #ffffff;
   }
   
-  .product-title {
-    font-family: var(--font-heading-family);
-    font-size: calc(var(--font-heading-scale) * 2.2rem);
-    font-weight: 500;
+  .featured-tag {
+    display: inline-block;
+    background-color: #D4AF37;
+    color: #ffffff;
+    padding: 5px 15px;
+    font-size: 0.8rem;
     margin-bottom: 10px;
-    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
   
-  .secondary-product-title {
-    font-family: var(--font-heading-family);
-    font-size: calc(var(--font-heading-scale) * 1.4rem);
-    font-weight: 500;
-    margin-bottom: 5px;
-    color: #fff;
+  .featured-title {
+    font-size: 2rem;
+    margin: 0 0 10px 0;
+    font-weight: 400;
+    color: #ffffff;
   }
   
-  .product-description {
-    font-size: 16px;
-    line-height: 1.5;
-    margin-bottom: 20px;
-    color: #fff;
-    max-width: 90%;
-  }
-  
-  .product-price {
-    font-weight: 600;
-    font-size: 20px;
-    color: #fff;
-    margin-bottom: 20px;
-  }
-  
-  .secondary-product-price {
-    font-weight: 600;
-    font-size: 18px;
-    color: #fff;
+  .featured-description {
+    font-size: 1rem;
     margin-bottom: 15px;
+    opacity: 0.9;
   }
   
-  .stars-rating {
+  .product-rating {
     display: flex;
     align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .stars {
+    color: #D4AF37;
+    margin-right: 10px;
+  }
+  
+  .featured-price {
+    font-size: 1.8rem;
+    font-weight: bold;
     margin: 15px 0;
   }
   
-  .star {
-    color: #D4AF37;
-    margin-right: 2px;
-  }
-  
-  .review-count {
-    margin-left: 5px;
-    font-size: 14px;
-    color: #ddd;
-  }
-  
-  .cta-button {
+  .featured-button {
     display: inline-block;
-    padding: 12px 30px;
     background-color: #D4AF37;
     color: #000;
+    padding: 10px 25px;
     text-transform: uppercase;
-    font-weight: 600;
-    font-size: 14px;
-    letter-spacing: 1px;
-    text-decoration: none;
-    transition: all 0.3s ease;
     border: none;
-    cursor: pointer;
-  }
-  
-  .secondary-button {
-    display: inline-block;
-    padding: 8px 20px;
-    background-color: transparent;
-    color: #fff;
-    border: 1px solid #fff;
-    text-transform: uppercase;
-    font-weight: 600;
-    font-size: 12px;
-    letter-spacing: 1px;
+    border-radius: 4px;
+    font-weight: bold;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s;
+  }
+  
+  .featured-button:hover {
+    background-color: #B8860B;
+  }
+  
+  .products-grid {
+    flex: 1;
+    min-width: 300px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 15px;
+  }
+  
+  .grid-product {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #e4e4e4 0%, #b3b3b3 100%);
+  }
+  
+  .grid-product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .grid-product-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+    color: #ffffff;
+  }
+  
+  .grid-product-title {
+    font-size: 1.2rem;
+    margin: 0 0 5px 0;
+    font-weight: 400;
+  }
+  
+  .grid-product-price {
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  
+  .sale-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #000;
+    color: #fff;
+    padding: 3px 8px;
+    font-size: 0.75rem;
+    font-weight: bold;
+  }
+  
+  .product-button {
+    display: inline-block;
+    background-color: #ffffff;
+    color: #000;
+    padding: 5px 15px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .product-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Añadiendo el efecto overlay hover */
+  .product-hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .featured-product:hover .product-hover-overlay,
+  .grid-product:hover .product-hover-overlay {
+    opacity: 1;
+  }
+  
+  .hover-content {
+    text-align: center;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+  }
+  
+  .featured-product:hover .hover-content,
+  .grid-product:hover .hover-content {
+    transform: translateY(0);
+  }
+  
+  .hover-title {
+    color: #ffffff;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  
+  .hover-button {
+    background-color: #D4AF37;
+    color: #000;
+    border: none;
+    padding: 8px 20px;
+    font-weight: bold;
+    border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s;
   }
   
-  .cta-button:hover {
-    background-color: #fff;
-    color: #000;
+  .hover-button:hover {
+    background-color: #B8860B;
   }
   
-  .secondary-button:hover {
-    background-color: #fff;
-    color: #000;
-  }
-  
-  @media screen and (max-width: 990px) {
-    .products-grid {
-      grid-template-columns: 1fr;
-      gap: 30px;
-    }
-  
-    .featured-product {
-      grid-row: auto;
-    }
-  
-    .secondary-products-grid {
-      grid-column: 1;
-    }
-  }
-  
-  @media screen and (max-width: 768px) {
-    .section-title {
-      font-size: calc(var(--font-heading-scale) * 2rem);
-    }
-  
-    .product-description {
-      display: none;
+  @media (max-width: 768px) {
+    .featured-products-section {
+      flex-direction: column;
     }
     
-    .secondary-products-grid {
-      display: grid;
-      grid-template-columns: 1fr;
+    .products-grid {
+      grid-template-columns: 1fr 1fr;
       grid-template-rows: auto;
     }
+  }
+</style>
+
+<div class="featured-products-section">
+  {% assign featured_product = collections[section.settings.featured_collection].products[0] %}
+  
+  <div class="featured-product">
+    <img 
+      src="{{ featured_product.featured_image | image_url: width: '800' }}" 
+      alt="{{ featured_product.title }}" 
+      width="800"
+      height="800"
+      class="featured-product-image"
+    >
     
-    .secondary-product:first-child {
-      grid-column: 1;
-    }
-  }
-  
-  @media screen and (max-width: 640px) {
-    .product-title {
-      font-size: calc(var(--font-heading-scale) * 1.8rem);
-    }
-  }
-  </style>
-  
-  <section class="featured-collection">
-    <div class="featured-container">
-      {% if section.settings.title != blank %}
-        <div class="section-header">
-          <h2 class="section-title">{{ section.settings.title }}</h2>
-          {% if section.settings.description != blank %}
-            <p class="section-description">{{ section.settings.description }}</p>
-          {% endif %}
+    <!-- Overlay base con información del producto -->
+    <div class="featured-product-overlay">
+      <span class="featured-tag">{{ section.settings.featured_tag }}</span>
+      <h2 class="featured-title">{{ featured_product.title }}</h2>
+      <p class="featured-description">{{ featured_product.description | strip_html | truncatewords: 20 }}</p>
+      
+      {% if featured_product.metafields.custom.rating %}
+        <div class="product-rating">
+          <div class="stars">
+            {% assign rating = featured_product.metafields.custom.rating | round %}
+            {% for i in (1..5) %}
+              {% if i <= rating %}
+                ★
+              {% else %}
+                ☆
+              {% endif %}
+            {% endfor %}
+          </div>
+          <span>({{ featured_product.metafields.custom.review_count | default: '24' }})</span>
         </div>
       {% endif %}
-  
-      <div class="products-grid">
-        {% assign featured_block = section.blocks | where: "type", "featured_product" | first %}
-        {% if featured_block %}
-          {% assign featured_product = all_products[featured_block.settings.product] %}
-          {% if featured_product %}
-            <div class="featured-product" {{ featured_block.shopify_attributes }}>
-              <a href="{{ featured_product.url }}" class="product-link">
-                <div class="product-image-container">
-                  <img 
-                    src="{{ featured_product.featured_image | image_url: width: 800 }}" 
-                    alt="{{ featured_product.title }}" 
-                    class="product-image"
-                    width="800"
-                    height="960"
-                    loading="lazy"
-                  >
-                  <div class="product-overlay"></div>
-                </div>
-                
-                {% if section.settings.badge_featured != blank %}
-                  <span class="product-badge" style="color: {{ section.settings.badge_featured_color }};">
-                    {{ section.settings.badge_featured }}
-                  </span>
-                {% endif %}
-  
-                <div class="product-content">
-                  <h3 class="product-title">
-                    {% if featured_block.settings.custom_title != blank %}
-                      {{ featured_block.settings.custom_title }}
-                    {% else %}
-                      {{ featured_product.title }}
-                    {% endif %}
-                  </h3>
-  
-                  {% if featured_block.settings.custom_description != blank %}
-                    <p class="product-description">{{ featured_block.settings.custom_description }}</p>
-                  {% endif %}
-  
-                  <div class="stars-rating">
-                    {% for i in (1..5) %}
-                      <span class="star">★</span>
-                    {% endfor %}
-                    <span class="review-count">(24)</span>
-                  </div>
-  
-                  <p class="product-price">{{ featured_product.price | money }}</p>
-  
-                  <span class="cta-button">
-                    {{ section.settings.button_text }}
-                  </span>
-                </div>
-              </a>
-            </div>
-          {% endif %}
+      
+      <div class="featured-price">
+        {% if featured_product.compare_at_price > featured_product.price %}
+          <s>{{ featured_product.compare_at_price | money }}</s>
         {% endif %}
-  
-        <div class="secondary-products-grid">
-          {% assign secondary_blocks = section.blocks | where: "type", "product" %}
-          {% for block in secondary_blocks limit: 3 %}
-            {% assign product = all_products[block.settings.product] %}
-            {% if product %}
-              <div class="secondary-product" {{ block.shopify_attributes }}>
-                <a href="{{ product.url }}" class="product-link">
-                  <div class="product-image-container">
-                    <img 
-                      src="{{ product.featured_image | image_url: width: 500 }}" 
-                      alt="{{ product.title }}" 
-                      class="product-image"
-                      width="500"
-                      height="500"
-                      loading="lazy"
-                    >
-                    <div class="product-overlay"></div>
-                  </div>
-                  
-                  {% if block.settings.show_discount and block.settings.discount_amount != blank %}
-                    <span class="discount-badge">-{{ block.settings.discount_amount }}%</span>
-                  {% endif %}
-  
-                  <div class="product-content">
-                    <h3 class="secondary-product-title">
-                      {% if block.settings.custom_title != blank %}
-                        {{ block.settings.custom_title }}
-                      {% else %}
-                        {{ product.title }}
-                      {% endif %}
-                    </h3>
-  
-                    <p class="secondary-product-price">{{ product.price | money }}</p>
-  
-                    <span class="secondary-button">
-                      {{ section.settings.secondary_button_text }}
-                    </span>
-                  </div>
-                </a>
-              </div>
-            {% endif %}
-          {% endfor %}
-        </div>
+        {{ featured_product.price | money }}
+      </div>
+      
+      <a href="{{ featured_product.url }}" class="featured-button">{{ section.settings.button_text }}</a>
+    </div>
+    
+    <!-- Nuevo overlay con efecto hover -->
+    <div class="product-hover-overlay">
+      <div class="hover-content">
+        <h3 class="hover-title">{{ section.settings.hover_text }}</h3>
+        <a href="{{ featured_product.url }}" class="hover-button">{{ section.settings.hover_button_text }}</a>
       </div>
     </div>
-  </section>
+  </div>
+  
+  <div class="products-grid">
+    {% assign grid_collection = collections[section.settings.grid_collection] %}
+    {% for product in grid_collection.products limit: 4 %}
+      {% if product.id != featured_product.id or section.settings.allow_duplicates %}
+        <div class="grid-product">
+          <img 
+            src="{{ product.featured_image | image_url: width: 400 }}" 
+            alt="{{ product.title }}" 
+            width="400"
+            height="400"
+            class="grid-product-image"
+          >
+          
+          {% if product.compare_at_price > product.price %}
+            {% assign discount_percentage = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}
+            <span class="sale-badge">-{{ discount_percentage }}%</span>
+          {% endif %}
+          
+          <!-- Overlay base con información del producto -->
+          <div class="grid-product-overlay">
+            <h3 class="grid-product-title">{{ product.title }}</h3>
+            <div class="grid-product-price">
+              {% if product.compare_at_price > product.price %}
+                <s>{{ product.compare_at_price | money }}</s>
+              {% endif %}
+              {{ product.price | money }}
+            </div>
+            <a href="{{ product.url }}" class="product-button">VER</a>
+          </div>
+          
+          <!-- Nuevo overlay con efecto hover -->
+          <div class="product-hover-overlay">
+            <div class="hover-content">
+              <h3 class="hover-title">{{ section.settings.grid_hover_text }}</h3>
+              <a href="{{ product.url }}" class="hover-button">{{ section.settings.hover_button_text }}</a>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Productos Destacados",
+  "settings": [
+    {
+      "type": "text",
+      "id": "featured_tag",
+      "label": "Etiqueta de producto destacado",
+      "default": "DESTACADO"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Colección para producto destacado"
+    },
+    {
+      "type": "collection",
+      "id": "grid_collection",
+      "label": "Colección para cuadrícula de productos"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto del botón",
+      "default": "DESCUBRIR"
+    },
+    {
+      "type": "text",
+      "id": "hover_text",
+      "label": "Texto del overlay al pasar el cursor (producto destacado)",
+      "default": "El Código Bravo"
+    },
+    {
+      "type": "text",
+      "id": "grid_hover_text",
+      "label": "Texto del overlay al pasar el cursor (productos de cuadrícula)",
+      "default": "Ver detalles"
+    },
+    {
+      "type": "text",
+      "id": "hover_button_text",
+      "label": "Texto del botón en overlay hover",
+      "default": "VER AHORA"
+    },
+    {
+      "type": "checkbox",
+      "id": "allow_duplicates",
+      "label": "Permitir productos duplicados",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Productos Destacados",
+      "category": "Productos"
+    }
+  ]
+}
+{% endschema %}
