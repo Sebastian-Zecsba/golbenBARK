@@ -1,234 +1,496 @@
-<style>
-  .grid-centrado {
-    justify-content: center !important;
-    text-align: center;
+{% schema %}
+  {
+    "name": "Productos Destacados",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Título de Sección",
+        "default": "Colección Destacada"
+      },
+      {
+        "type": "text",
+        "id": "description",
+        "label": "Descripción",
+        "default": "Descubre nuestras piezas más exclusivas, creadas con los materiales más finos y diseñadas para perdurar en el tiempo."
+      },
+      {
+        "type": "text",
+        "id": "button_text",
+        "label": "Texto del Botón",
+        "default": "DESCUBRIR"
+      },
+      {
+        "type": "text",
+        "id": "secondary_button_text",
+        "label": "Texto del Botón Secundario",
+        "default": "VER"
+      },
+      {
+        "type": "text",
+        "id": "badge_featured",
+        "label": "Texto Etiqueta Destacado",
+        "default": "DESTACADO"
+      },
+      {
+        "type": "color",
+        "id": "badge_featured_color",
+        "label": "Color Etiqueta Destacado",
+        "default": "#D4AF37"
+      },
+      {
+        "type": "color",
+        "id": "overlay_color",
+        "label": "Color de Superposición",
+        "default": "#000000"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "featured_product",
+        "name": "Producto Principal",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Producto"
+          },
+          {
+            "type": "text",
+            "id": "custom_title",
+            "label": "Título Personalizado (Opcional)"
+          },
+          {
+            "type": "textarea",
+            "id": "custom_description",
+            "label": "Descripción Personalizada (Opcional)"
+          }
+        ]
+      },
+      {
+        "type": "product",
+        "name": "Producto Secundario",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Producto"
+          },
+          {
+            "type": "text",
+            "id": "custom_title",
+            "label": "Título Personalizado (Opcional)"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_discount",
+            "label": "Mostrar etiqueta de descuento",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "discount_amount",
+            "label": "Porcentaje de descuento",
+            "default": "15"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Productos Destacados",
+        "category": "Productos",
+        "blocks": [
+          {
+            "type": "featured_product"
+          },
+          {
+            "type": "product"
+          },
+          {
+            "type": "product"
+          },
+          {
+            "type": "product"
+          }
+        ]
+      }
+    ]
   }
-
-  .text_minimal_product {
-    text-align: center;
+  {% endschema %}
+  
+  <style>
+  .featured-products {
+    padding: 60px 0;
     font-family: var(--font-body-family);
+  }
+  
+  .featured-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .section-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .section-title {
+    font-family: var(--font-heading-family);
+    font-size: calc(var(--font-heading-scale) * 3rem);
+    font-weight: var(--font-heading-weight);
+    margin-bottom: 15px;
+    color: #1a1a1a;
+  }
+  
+  .section-description {
     font-size: calc(var(--font-body-scale) * 1.25rem);
     line-height: 1.5;
+    max-width: 700px;
+    margin: 0 auto;
   }
-
-  h2 {
-    text-align: center;
-    font-family: var(--font-heading-family);
-    font-size: calc(var(--font-heading-scale) * 3.4rem);
-    font-weight: var(--font-heading-weight);
-    margin: 0 0 2rem;
+  
+  .products-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
   }
-
-  .collection-card {
+  
+  .featured-product {
+    position: relative;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    border-radius: 0;
+    overflow: hidden;
+    height: 100%;
+    min-height: 600px;
+  }
+  
+  .secondary-products {
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .product-card {
     position: relative;
     overflow: hidden;
-    border-radius: 14px;
+    border-radius: 0;
+    background-color: #f5f5f5;
   }
-
-  .image-wrapper {
+  
+  .product-card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px;
+    z-index: 3;
+  }
+  
+  .featured-image-container {
     position: relative;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
-    border-radius: 14px;
   }
-
-  .collection-overlay {
+  
+  .product-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+  }
+  
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+  }
+  
+  .product-card:hover .product-image {
+    transform: scale(1.05);
+  }
+  
+  .product-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.4);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 14px;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%);
     z-index: 2;
   }
-
-  .image-wrapper:hover .collection-overlay {
-    opacity: 1;
-  }
-
-  .collection-button {
-    background: #fff;
-    color: #000;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    transition: transform 0.2s ease;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
-
-  .collection-button:hover {
-    background-color: #D4AF37;
-    color: #fff;
-    border: none; /* <-- esta línea elimina el borde feo */
-    transform: translateY(-2px); /* también puedes dejar este para que suba un poco */
-  }
-
-
-
-  h3.collection-title {
-    margin-top: 0.5rem;
-    font-size: calc(var(--font-body-scale) * 1.8rem);
-    font-family: var(--font-heading-family);
-    font-weight: 500 !important;
-    text-align: left;
-    color: #2d322f;
-    line-height: 1.75rem;
-  }
-
-  .badge {
+  
+  .product-badge {
     position: absolute;
-    top: 0.75rem;
-    left: 0.75rem;
-    z-index: 3;
-    font-size: 0.75rem;
+    top: 20px;
+    left: 20px;
+    padding: 5px 10px;
+    font-size: 14px;
     font-weight: 600;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.375rem;
     text-transform: uppercase;
-    pointer-events: none;
-    color: white;
+    z-index: 3;
+    color: #000;
   }
-
-  .badge_nuevo {
-    background-color: #D4AF37;
-    color: black;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    padding: 7px;
-    font-size: 1rem;
+  
+  .discount-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 5px 10px;
+    background-color: #000;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 3;
   }
-
-  .badge_oferta {
-    background-color: red;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    padding: 7px;
-    font-size: 1rem;
+  
+  .product-title {
+    font-family: var(--font-heading-family);
+    font-size: calc(var(--font-heading-scale) * 2.2rem);
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #fff;
   }
-
+  
+  .secondary-product-title {
+    font-family: var(--font-heading-family);
+    font-size: calc(var(--font-heading-scale) * 1.4rem);
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #fff;
+  }
+  
+  .product-description {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #fff;
+    max-width: 80%;
+  }
+  
   .product-price {
     font-weight: 600;
-    text-align: left;
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 20px;
   }
-</style>
-
-<section class="product-grid py-8">
-  <div class="container mx-auto px-4 w-full text-center">
-    
-    <h2 class="font-bold mb-8">{{ section.settings.title }}</h2>
-    <p class="text_minimal_product">{{ section.settings.description }}</p>
-    
-    <div class="">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 grid-centrado">
-        {% for block in section.blocks %}
-          {% assign product = all_products[block.settings.product] %}
-          {% if product %}
-            <div class="collection-card bg-white p-4 shadow-lg rounded-lg w-[300px]" {{ block.shopify_attributes }}>
-              <a href="{{ product.url }}" class="block no-underline">
-                <div class="image-wrapper mb-4" style="aspect-ratio:1/1">
-
-                  {% if product.tags contains 'nuevo' %}
-                    <span class="badge badge_nuevo">Nuevo</span>
-                  {% elsif product.tags contains 'oferta' %}
-                    <span class="badge badge_oferta">Oferta</span>
-                  {% endif %}
-
-                  <img 
-                    src="{{ product.featured_image | image_url: width: 300, height: 300 }}" 
-                    alt="{{ product.title }}" 
-                    width="300"
-                    height="300"
-                    class="w-full h-full object-cover"
-                    loading="lazy"
-                  >
-
-                  <div class="collection-overlay">
-                    <button class="collection-button">
-                      {{ section.settings.button-text }}
-                    </button>
-                  </div>
-                </div>
-              </a>
-
-              <!-- Texto alineado a la izquierda -->
-              <h3 class="collection-title">
-                {% if block.settings.title-collection != blank %}
-                  {{ block.settings.title-collection }}
-                {% else %}
-                  {{ product.title }}
+  
+  .secondary-product-price {
+    font-weight: 600;
+    font-size: 18px;
+    color: #fff;
+  }
+  
+  .rating {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    color: #D4AF37;
+  }
+  
+  .star {
+    color: #D4AF37;
+    margin-right: 2px;
+  }
+  
+  .review-count {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #ddd;
+  }
+  
+  .cta-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #D4AF37;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .secondary-button {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .cta-button:hover {
+    background-color: #fff;
+    color: #000;
+  }
+  
+  .secondary-button:hover {
+    background-color: #fff;
+    color: #000;
+  }
+  
+  @media screen and (max-width: 990px) {
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .featured-product {
+      grid-row: auto;
+      min-height: 450px;
+    }
+  
+    .secondary-products {
+      grid-column: 1;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .section-title {
+      font-size: calc(var(--font-heading-scale) * 2.5rem);
+    }
+  
+    .featured-product {
+      min-height: 400px;
+    }
+  
+    .product-description {
+      display: none;
+    }
+  }
+  
+  @media screen and (max-width: 640px) {
+    .secondary-products {
+      grid-template-columns: 1fr;
+    }
+  
+    .product-title {
+      font-size: calc(var(--font-heading-scale) * 1.8rem);
+    }
+  }
+  </style>
+  
+  <section class="featured-products">
+    <div class="featured-container">
+      {% if section.settings.title != blank %}
+        <div class="section-header">
+          <h2 class="section-title">{{ section.settings.title }}</h2>
+          {% if section.settings.description != blank %}
+            <p class="section-description">{{ section.settings.description }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+  
+      <div class="products-grid">
+        {% assign featured_block = section.blocks | where: "type", "featured_product" | first %}
+        {% if featured_block %}
+          {% assign featured_product = all_products[featured_block.settings.product] %}
+          {% if featured_product %}
+            <div class="featured-product product-card" {{ featured_block.shopify_attributes }}>
+              <a href="{{ featured_product.url }}" class="featured-image-container">
+                <img 
+                  src="{{ featured_product.featured_image | image_url: width: 800 }}" 
+                  alt="{{ featured_product.title }}" 
+                  class="product-image"
+                  width="800"
+                  height="800"
+                  loading="lazy"
+                >
+                <div class="product-overlay"></div>
+                {% if section.settings.badge_featured != blank %}
+                  <span class="product-badge" style="background-color: {{ section.settings.badge_featured_color }};">
+                    {{ section.settings.badge_featured }}
+                  </span>
                 {% endif %}
-              </h3>
-              <p class="product-price">
-                {{ product.price | money_without_trailing_zeros | replace: ',', '.' }} COP
-              </p>
-
-              <div class="jdgm-widget"
-                   data-id="{{ product.id }}"
-                   data-template="inline_reviews"
-                   data-per-page="0">
+              </a>
+  
+              <div class="product-card-content">
+                <h3 class="product-title">
+                  {% if featured_block.settings.custom_title != blank %}
+                    {{ featured_block.settings.custom_title }}
+                  {% else %}
+                    {{ featured_product.title }}
+                  {% endif %}
+                </h3>
+  
+                {% if featured_block.settings.custom_description != blank %}
+                  <p class="product-description">{{ featured_block.settings.custom_description }}</p>
+                {% endif %}
+  
+                <div class="rating">
+                  {% for i in (1..5) %}
+                    <span class="star">★</span>
+                  {% endfor %}
+                  <span class="review-count">(24)</span>
+                </div>
+  
+                <p class="product-price">{{ featured_product.price | money_without_trailing_zeros }}</p>
+  
+                <a href="{{ featured_product.url }}" class="cta-button">
+                  {{ section.settings.button_text }}
+                </a>
               </div>
             </div>
           {% endif %}
-        {% endfor %}
+        {% endif %}
+  
+        <div class="secondary-products">
+          {% assign secondary_blocks = section.blocks | where: "type", "product" %}
+          {% for block in secondary_blocks %}
+            {% assign product = all_products[block.settings.product] %}
+            {% if product %}
+              <div class="product-card" {{ block.shopify_attributes }}>
+                <a href="{{ product.url }}" class="product-image-container">
+                  <img 
+                    src="{{ product.featured_image | image_url: width: 500 }}" 
+                    alt="{{ product.title }}" 
+                    class="product-image"
+                    width="500"
+                    height="500"
+                    loading="lazy"
+                  >
+                  <div class="product-overlay"></div>
+                  {% if block.settings.show_discount and block.settings.discount_amount != blank %}
+                    <span class="discount-badge">-{{ block.settings.discount_amount }}%</span>
+                  {% endif %}
+                </a>
+  
+                <div class="product-card-content">
+                  <h3 class="secondary-product-title">
+                    {% if block.settings.custom_title != blank %}
+                      {{ block.settings.custom_title }}
+                    {% else %}
+                      {{ product.title }}
+                    {% endif %}
+                  </h3>
+  
+                  <p class="secondary-product-price">{{ product.price | money_without_trailing_zeros }}</p>
+  
+                  <a href="{{ product.url }}" class="secondary-button">
+                    {{ section.settings.secondary_button_text }}
+                  </a>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
       </div>
     </div>
-  </div>
-</section>
-
-
-{% schema %}
-{
-  "name": "Grilla de Productos",
-  "max_blocks": 6,
-  "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Título",
-      "default": "Productos Destacados"
-    },
-    {
-      "type": "text",
-      "id": "description",
-      "label": "Descripción",
-      "default": "Nuestra selección de piezas más exclusivas, creadas con los materiales más finos y diseñadas para perdurar en el tiempo."
-    },
-    {
-      "type": "text",
-      "id": "button-text",
-      "label": "Texto del Botón",
-      "default": "Comprar"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "producto",
-      "name": "Producto",
-      "settings": [
-        {
-          "type": "product",
-          "id": "product",
-          "label": "Selecciona un producto"
-        },
-        {
-          "type": "text",
-          "id": "title-collection",
-          "label": "Título Personalizado",
-          "default": "Selección de nombre"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Grilla Centrada",
-      "category": "Diseño Personalizado"
-    }
-  ]
-}
-{% endschema %}
+  </section>
