@@ -104,10 +104,21 @@
             "button_text": "EXPLORAR COLECCIÓN",
             "title_color": "#fffdfd"
           }
+        },
+        "category_dzm37e": {
+          "type": "category",
+          "settings": {
+            "collection": "pulseras",
+            "category_title": "",
+            "category_description": "Beautiful pieces that add sophistication to any outfit.",
+            "button_text": "EXPLORAR COLECCIÓN",
+            "title_color": ""
+          }
         }
       },
       "block_order": [
-        "category_Vtfq88"
+        "category_Vtfq88",
+        "category_dzm37e"
       ],
       "settings": {
         "heading": "Categorías Exclusivas",
