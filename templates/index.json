@@ -125,14 +125,27 @@
     },
     "minimal_product_grid_1": {
       "type": "minimal-product-grid",
+      "blocks": {
+        "featured_product_bM6KKQ": {
+          "type": "featured_product",
+          "settings": {
+            "product": "collar",
+            "custom_title": "",
+            "custom_description": ""
+          }
+        }
+      },
+      "block_order": [
+        "featured_product_bM6KKQ"
+      ],
       "settings": {
         "title": "Productos Destacados",
         "description": "Nuestra selección de piezas más exclusivas, creadas con los materiales más finos y diseñadas para perdurar en el tiempo.",
         "button_text": "DESCUBRIR",
         "secondary_button_text": "VER",
         "badge_featured": "DESTACADO",
-        "badge_featured_color": "#D4AF37",
-        "overlay_color": "#000000"
+        "badge_featured_color": "#d4af37",
+        "overlay_background": "rgba(0,0,0,0.4)"
       }
     },
     "image_with_text_y7JabR": {
