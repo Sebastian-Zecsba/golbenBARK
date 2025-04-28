@@ -322,11 +322,13 @@
   {% endif %}
   
   <div class="products-grid">
+    {% assign has_blocks = false %}
     {% for block in section.blocks %}
+      {% assign has_blocks = true %}
       {% assign product = all_products[block.settings.product] %}
       
-      {% if product.title %}
-        <div class="grid-product" {{ block.shopify_attributes }}>
+      <div class="grid-product" {{ block.shopify_attributes }}>
+        {% if product.title %}
           <img 
             src="{{ product.featured_image | image_url: width: 400 }}" 
             alt="{{ product.title }}" 
@@ -363,19 +365,21 @@
             </div>
           </div>
           {% endif %}
-        </div>
-      {% else %}
-        <div class="grid-product empty-product-slot" {{ block.shopify_attributes }}>
-          <p>Selecciona un producto para este espacio</p>
-        </div>
-      {% endif %}
-    {% else %}
+        {% else %}
+          <div class="empty-product-slot">
+            <p>Selecciona un producto para este espacio</p>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+    
+    {% unless has_blocks %}
       {% for i in (1..3) %}
         <div class="grid-product empty-product-slot">
           <p>Agrega productos en la configuración de la sección</p>
         </div>
       {% endfor %}
-    {% endfor %}
+    {% endunless %}
   </div>
 </div>
 
@@ -868,7 +872,7 @@
     {
       "type": "product",
       "name": "Producto",
-      "limit": 10,
+      "limit": 3,
       "settings": [
         {
           "type": "product",
