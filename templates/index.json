@@ -135,15 +135,6 @@
             "discount_amount": "15"
           }
         },
-        "product_mQUbaX": {
-          "type": "product",
-          "settings": {
-            "product": "perro-sucio",
-            "custom_title": "",
-            "show_discount": false,
-            "discount_amount": "15"
-          }
-        },
         "featured_product_TkxPXU": {
           "type": "featured_product",
           "settings": {
@@ -155,7 +146,6 @@
       },
       "block_order": [
         "product_Gpeti3",
-        "product_mQUbaX",
         "featured_product_TkxPXU"
       ],
       "settings": {
