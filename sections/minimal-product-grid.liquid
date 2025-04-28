@@ -6,18 +6,18 @@
         "type": "text",
         "id": "title",
         "label": "Título de Sección",
-        "default": "Colección Destacada"
+        "default": "Nuestras Joyas Destacadas"
       },
       {
         "type": "text",
         "id": "description",
         "label": "Descripción",
-        "default": "Descubre nuestras piezas más exclusivas, creadas con los materiales más finos y diseñadas para perdurar en el tiempo."
+        "default": "Descubre nuestras piezas más exclusivas, creadas con los materiales más finos"
       },
       {
         "type": "text",
         "id": "button_text",
-        "label": "Texto del Botón",
+        "label": "Texto del Botón Principal",
         "default": "DESCUBRIR"
       },
       {
@@ -40,9 +40,9 @@
       },
       {
         "type": "color",
-        "id": "overlay_color",
+        "id": "overlay_background",
         "label": "Color de Superposición",
-        "default": "#000000"
+        "default": "rgba(0,0,0,0.4)"
       }
     ],
     "blocks": [
@@ -121,7 +121,7 @@
   {% endschema %}
   
   <style>
-  .featured-products {
+  .featured-collection {
     padding: 60px 0;
     font-family: var(--font-body-family);
   }
@@ -139,14 +139,14 @@
   
   .section-title {
     font-family: var(--font-heading-family);
-    font-size: calc(var(--font-heading-scale) * 3rem);
+    font-size: calc(var(--font-heading-scale) * 2.5rem);
     font-weight: var(--font-heading-weight);
     margin-bottom: 15px;
     color: #1a1a1a;
   }
   
   .section-description {
-    font-size: calc(var(--font-body-scale) * 1.25rem);
+    font-size: calc(var(--font-body-scale) * 1.15rem);
     line-height: 1.5;
     max-width: 700px;
     margin: 0 auto;
@@ -162,47 +162,43 @@
     position: relative;
     grid-column: 1;
     grid-row: 1 / span 2;
-    border-radius: 0;
     overflow: hidden;
-    height: 100%;
-    min-height: 600px;
+    aspect-ratio: 1/1.2;
+    background-color: #f0f0f0;
   }
   
-  .secondary-products {
+  .secondary-products-grid {
     grid-column: 2;
     display: grid;
+    grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
   
-  .product-card {
+  .secondary-product {
     position: relative;
     overflow: hidden;
-    border-radius: 0;
-    background-color: #f5f5f5;
+    aspect-ratio: 1/1;
+    background-color: #f0f0f0;
   }
   
-  .product-card-content {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 30px;
-    z-index: 3;
+  .secondary-product:first-child {
+    grid-column: 1 / span 2;
   }
   
-  .featured-image-container {
+  .product-link {
     position: relative;
+    display: block;
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    text-decoration: none;
+    color: #fff;
   }
   
   .product-image-container {
     position: relative;
     width: 100%;
     height: 100%;
-    aspect-ratio: 1/1;
     overflow: hidden;
   }
   
@@ -213,7 +209,7 @@
     transition: transform 0.7s ease;
   }
   
-  .product-card:hover .product-image {
+  .product-link:hover .product-image {
     transform: scale(1.05);
   }
   
@@ -236,7 +232,7 @@
     font-weight: 600;
     text-transform: uppercase;
     z-index: 3;
-    color: #000;
+    color: #D4AF37;
   }
   
   .discount-badge {
@@ -251,11 +247,20 @@
     z-index: 3;
   }
   
+  .product-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px;
+    z-index: 3;
+  }
+  
   .product-title {
     font-family: var(--font-heading-family);
     font-size: calc(var(--font-heading-scale) * 2.2rem);
     font-weight: 500;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     color: #fff;
   }
   
@@ -272,7 +277,7 @@
     line-height: 1.5;
     margin-bottom: 20px;
     color: #fff;
-    max-width: 80%;
+    max-width: 90%;
   }
   
   .product-price {
@@ -286,13 +291,13 @@
     font-weight: 600;
     font-size: 18px;
     color: #fff;
+    margin-bottom: 15px;
   }
   
-  .rating {
+  .stars-rating {
     display: flex;
     align-items: center;
     margin: 15px 0;
-    color: #D4AF37;
   }
   
   .star {
@@ -349,45 +354,46 @@
   @media screen and (max-width: 990px) {
     .products-grid {
       grid-template-columns: 1fr;
+      gap: 30px;
     }
   
     .featured-product {
       grid-row: auto;
-      min-height: 450px;
     }
   
-    .secondary-products {
+    .secondary-products-grid {
       grid-column: 1;
-      grid-template-columns: 1fr 1fr;
     }
   }
   
   @media screen and (max-width: 768px) {
     .section-title {
-      font-size: calc(var(--font-heading-scale) * 2.5rem);
-    }
-  
-    .featured-product {
-      min-height: 400px;
+      font-size: calc(var(--font-heading-scale) * 2rem);
     }
   
     .product-description {
       display: none;
     }
+    
+    .secondary-products-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+    }
+    
+    .secondary-product:first-child {
+      grid-column: 1;
+    }
   }
   
   @media screen and (max-width: 640px) {
-    .secondary-products {
-      grid-template-columns: 1fr;
-    }
-  
     .product-title {
       font-size: calc(var(--font-heading-scale) * 1.8rem);
     }
   }
   </style>
   
-  <section class="featured-products">
+  <section class="featured-collection">
     <div class="featured-container">
       {% if section.settings.title != blank %}
         <div class="section-header">
@@ -403,90 +409,96 @@
         {% if featured_block %}
           {% assign featured_product = all_products[featured_block.settings.product] %}
           {% if featured_product %}
-            <div class="featured-product product-card" {{ featured_block.shopify_attributes }}>
-              <a href="{{ featured_product.url }}" class="featured-image-container">
-                <img 
-                  src="{{ featured_product.featured_image | image_url: width: 800 }}" 
-                  alt="{{ featured_product.title }}" 
-                  class="product-image"
-                  width="800"
-                  height="800"
-                  loading="lazy"
-                >
-                <div class="product-overlay"></div>
+            <div class="featured-product" {{ featured_block.shopify_attributes }}>
+              <a href="{{ featured_product.url }}" class="product-link">
+                <div class="product-image-container">
+                  <img 
+                    src="{{ featured_product.featured_image | image_url: width: 800 }}" 
+                    alt="{{ featured_product.title }}" 
+                    class="product-image"
+                    width="800"
+                    height="960"
+                    loading="lazy"
+                  >
+                  <div class="product-overlay"></div>
+                </div>
+                
                 {% if section.settings.badge_featured != blank %}
-                  <span class="product-badge" style="background-color: {{ section.settings.badge_featured_color }};">
+                  <span class="product-badge" style="color: {{ section.settings.badge_featured_color }};">
                     {{ section.settings.badge_featured }}
                   </span>
                 {% endif %}
-              </a>
   
-              <div class="product-card-content">
-                <h3 class="product-title">
-                  {% if featured_block.settings.custom_title != blank %}
-                    {{ featured_block.settings.custom_title }}
-                  {% else %}
-                    {{ featured_product.title }}
+                <div class="product-content">
+                  <h3 class="product-title">
+                    {% if featured_block.settings.custom_title != blank %}
+                      {{ featured_block.settings.custom_title }}
+                    {% else %}
+                      {{ featured_product.title }}
+                    {% endif %}
+                  </h3>
+  
+                  {% if featured_block.settings.custom_description != blank %}
+                    <p class="product-description">{{ featured_block.settings.custom_description }}</p>
                   {% endif %}
-                </h3>
   
-                {% if featured_block.settings.custom_description != blank %}
-                  <p class="product-description">{{ featured_block.settings.custom_description }}</p>
-                {% endif %}
+                  <div class="stars-rating">
+                    {% for i in (1..5) %}
+                      <span class="star">★</span>
+                    {% endfor %}
+                    <span class="review-count">(24)</span>
+                  </div>
   
-                <div class="rating">
-                  {% for i in (1..5) %}
-                    <span class="star">★</span>
-                  {% endfor %}
-                  <span class="review-count">(24)</span>
+                  <p class="product-price">{{ featured_product.price | money }}</p>
+  
+                  <span class="cta-button">
+                    {{ section.settings.button_text }}
+                  </span>
                 </div>
-  
-                <p class="product-price">{{ featured_product.price | money_without_trailing_zeros }}</p>
-  
-                <a href="{{ featured_product.url }}" class="cta-button">
-                  {{ section.settings.button_text }}
-                </a>
-              </div>
+              </a>
             </div>
           {% endif %}
         {% endif %}
   
-        <div class="secondary-products">
+        <div class="secondary-products-grid">
           {% assign secondary_blocks = section.blocks | where: "type", "product" %}
-          {% for block in secondary_blocks %}
+          {% for block in secondary_blocks limit: 3 %}
             {% assign product = all_products[block.settings.product] %}
             {% if product %}
-              <div class="product-card" {{ block.shopify_attributes }}>
-                <a href="{{ product.url }}" class="product-image-container">
-                  <img 
-                    src="{{ product.featured_image | image_url: width: 500 }}" 
-                    alt="{{ product.title }}" 
-                    class="product-image"
-                    width="500"
-                    height="500"
-                    loading="lazy"
-                  >
-                  <div class="product-overlay"></div>
+              <div class="secondary-product" {{ block.shopify_attributes }}>
+                <a href="{{ product.url }}" class="product-link">
+                  <div class="product-image-container">
+                    <img 
+                      src="{{ product.featured_image | image_url: width: 500 }}" 
+                      alt="{{ product.title }}" 
+                      class="product-image"
+                      width="500"
+                      height="500"
+                      loading="lazy"
+                    >
+                    <div class="product-overlay"></div>
+                  </div>
+                  
                   {% if block.settings.show_discount and block.settings.discount_amount != blank %}
                     <span class="discount-badge">-{{ block.settings.discount_amount }}%</span>
                   {% endif %}
+  
+                  <div class="product-content">
+                    <h3 class="secondary-product-title">
+                      {% if block.settings.custom_title != blank %}
+                        {{ block.settings.custom_title }}
+                      {% else %}
+                        {{ product.title }}
+                      {% endif %}
+                    </h3>
+  
+                    <p class="secondary-product-price">{{ product.price | money }}</p>
+  
+                    <span class="secondary-button">
+                      {{ section.settings.secondary_button_text }}
+                    </span>
+                  </div>
                 </a>
-  
-                <div class="product-card-content">
-                  <h3 class="secondary-product-title">
-                    {% if block.settings.custom_title != blank %}
-                      {{ block.settings.custom_title }}
-                    {% else %}
-                      {{ product.title }}
-                    {% endif %}
-                  </h3>
-  
-                  <p class="secondary-product-price">{{ product.price | money_without_trailing_zeros }}</p>
-  
-                  <a href="{{ product.url }}" class="secondary-button">
-                    {{ section.settings.secondary_button_text }}
-                  </a>
-                </div>
               </div>
             {% endif %}
           {% endfor %}
