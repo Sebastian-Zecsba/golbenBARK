@@ -137,40 +137,24 @@
     "minimal_product_grid_1": {
       "type": "minimal-product-grid",
       "blocks": {
-        "product_w6mgbn": {
+        "product_JPEaUk": {
           "type": "product",
           "settings": {
-            "product": "perro-sucio",
+            "product": "collar-1",
             "hover_text": ""
           }
         },
-        "product_FEbCgF": {
+        "product_dn9VCi": {
           "type": "product",
           "settings": {
-            "product": "camisseta-manga-corta",
-            "hover_text": ""
-          }
-        },
-        "product_e9ha3y": {
-          "type": "product",
-          "settings": {
-            "product": "collar",
-            "hover_text": ""
-          }
-        },
-        "product_HD7Nxq": {
-          "type": "product",
-          "settings": {
-            "product": "pulsera-oro-laminado",
+            "product": "collar-2",
             "hover_text": ""
           }
         }
       },
       "block_order": [
-        "product_w6mgbn",
-        "product_FEbCgF",
-        "product_e9ha3y",
-        "product_HD7Nxq"
+        "product_JPEaUk",
+        "product_dn9VCi"
       ],
       "settings": {
         "section_width": 1500,
@@ -192,13 +176,13 @@
         "show_description": true,
         "description_word_count": 15,
         "description_font_size": 1,
-        "description_color": "#FFFFFF",
+        "description_color": "#ffffff",
         "show_rating": false,
         "default_rating": 5,
         "default_review_count": 10,
-        "star_color": "#FFD700",
+        "star_color": "#ffd700",
         "price_font_size": 1.2,
-        "price_color": "#FFFFFF",
+        "price_color": "#ffffff",
         "button_text": "DESCUBRIR",
         "button_bg_color": "#d4af37",
         "button_text_color": "#000000",
