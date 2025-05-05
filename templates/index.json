@@ -140,28 +140,44 @@
         "product_JPEaUk": {
           "type": "product",
           "settings": {
-            "product": "collar-1",
+            "product": "collar-2",
             "hover_text": ""
           }
         },
         "product_dn9VCi": {
           "type": "product",
           "settings": {
-            "product": "collar-2",
+            "product": "collar-3",
+            "hover_text": ""
+          }
+        },
+        "product_icntgd": {
+          "type": "product",
+          "settings": {
+            "product": "collar-4",
+            "hover_text": ""
+          }
+        },
+        "product_KGiP4p": {
+          "type": "product",
+          "settings": {
+            "product": "collar-5",
             "hover_text": ""
           }
         }
       },
       "block_order": [
         "product_JPEaUk",
-        "product_dn9VCi"
+        "product_dn9VCi",
+        "product_icntgd",
+        "product_KGiP4p"
       ],
       "settings": {
         "section_width": 1500,
         "section_padding": 90,
         "gap_size": 20,
         "border_radius": 0,
-        "featured_product": "pulsera-2",
+        "featured_product": "collar-1",
         "featured_product_bg": "#3a3a3a",
         "featured_product_height": 600,
         "mobile_featured_height": 400,
